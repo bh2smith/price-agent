@@ -27,7 +27,7 @@ export async function GET(request: Request) {
   }
 }
 
-export type ValidationResult<T> =
+type ValidationResult<T> =
   | { ok: true; query: T }
   | { ok: false; error: string };
 
