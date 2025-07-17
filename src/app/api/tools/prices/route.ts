@@ -3,6 +3,10 @@ import { PriceQuerySchema } from "@/src/app/api/schema";
 import { PriceQuery } from "@/src/lib/types";
 import { FeedRevolver } from "@/src/lib/feed";
 
+// Simple in-memory cache for price results
+const priceCache = new Map<string, { price: number; timestamp: number }>();
+const CACHE_TTL = 60 * 1000; // 1 minute in milliseconds
+
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const validationResult = validateQuery(url.searchParams);
@@ -38,11 +42,27 @@ function validateQuery(params: URLSearchParams): ValidationResult<PriceQuery> {
 }
 
 async function getTokenPrice(query: PriceQuery): Promise<number> {
+  const cacheKey = `${query.chainId}:${query.address}`;
+  const now = Date.now();
+
+  // Check cache first
+  const cached = priceCache.get(cacheKey);
+  if (cached && now - cached.timestamp < CACHE_TTL) {
+    console.log(`Cache hit for ${cacheKey}: ${cached.price}`);
+    return cached.price;
+  }
+
+  // Fetch fresh price
   const revolver = FeedRevolver.withAllSources();
   const price = await revolver.getPrice(query);
   console.log(`Got price: ${price} for ${query.chainId}:${query.address}`);
   if (!price) {
     throw new Error(`No price found for ${query.chainId}:${query.address}`);
   }
+
+  // Cache the result
+  priceCache.set(cacheKey, { price, timestamp: now });
+  console.log(`Cached price for ${cacheKey}: ${price}`);
+
   return price;
 }
