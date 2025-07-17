@@ -38,20 +38,11 @@ function validateQuery(params: URLSearchParams): ValidationResult<PriceQuery> {
   return { ok: true, query: result.data };
 }
 
-interface PriceResponse {
-  address: Address;
-  chainId: number;
-  price: number;
-}
-
-async function getTokenPrice(query: PriceQuery): Promise<PriceResponse> {
+async function getTokenPrice(query: PriceQuery): Promise<number> {
   const revolver = FeedRevolver.withAllSources();
   const price = await revolver.getPrice(query);
   if (!price) {
     throw new Error(`No price found for ${query.chainId}:${query.address}`);
   }
-  return {
-    ...query,
-    price,
-  };
+  return price;
 }

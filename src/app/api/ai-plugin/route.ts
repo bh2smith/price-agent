@@ -39,12 +39,7 @@ export async function GET() {
               content: {
                 "application/json": {
                   schema: {
-                    type: "object",
-                    properties: {
-                      address: { type: "string" },
-                      chainId: { type: "number" },
-                      price: { type: "number" },
-                    },
+                    type: "number",
                   },
                 },
               },
