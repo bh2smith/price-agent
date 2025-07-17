@@ -32,10 +32,7 @@ export async function GET() {
           description:
             "Returns the price for a given token address and chain ID.",
           parameters: [
-            {
-              ...addressParam,
-              name: "tokenAddress",
-            },
+            { ...addressParam },
             { ...chainIdParam },
           ],
           responses: {

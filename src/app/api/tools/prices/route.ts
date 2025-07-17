@@ -3,13 +3,17 @@ import { PriceQuerySchema } from "@/src/app/api/schema";
 import { type Address } from "viem";
 
 export async function GET(request: Request) {
-  try {
-    const { searchParams } = new URL(request.url);
-    console.log("prices/", searchParams);
-    const query = PriceQuerySchema.parse(
-      Object.fromEntries(searchParams.entries()),
+  const url = new URL(request.url);
+  const validationResult = validateQuery(url.searchParams);
+  if (!validationResult.ok) {
+    return NextResponse.json(
+      { error: validationResult.error },
+      { status: 400 },
     );
-    const price = getTokenPrice(query);
+  }
+  console.log("prices/", validationResult.query);
+  try {
+    const price = getTokenPrice(validationResult.query);
     return NextResponse.json({ price }, { status: 200 });
   } catch (error) {
     const publicMessage = "Error validating payload";
@@ -18,17 +22,36 @@ export async function GET(request: Request) {
   }
 }
 
-// export type ValidationResult<T> =
-//   | { ok: true; query: T }
-//   | { ok: false; error: string };
+export type ValidationResult<T> =
+  | { ok: true; query: T }
+  | { ok: false; error: string };
+
+function validateQuery(params: URLSearchParams): ValidationResult<PriceQuery> {
+  const result = PriceQuerySchema.safeParse(
+    Object.fromEntries(params.entries()),
+  );
+  if (!result.success) {
+    return { ok: false, error: result.error.message };
+  }
+  return { ok: true, query: result.data };
+}
 
 interface PriceQuery {
-  tokenAddress: Address;
+  address: Address;
   chainId: number;
 }
 
-function getTokenPrice(query: PriceQuery): string {
+interface PriceResponse {
+  address: Address;
+  chainId: number;
+  price: number;
+}
+
+function getTokenPrice(query: PriceQuery): PriceResponse {
   console.log("Handle Price Query", query);
   // TODO: Implement real price fetching logic
-  return "123.45";
+  return {
+    ...query,
+    price: 123.45,
+  };
 }

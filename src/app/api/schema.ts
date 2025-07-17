@@ -11,6 +11,6 @@ const evmAddressSchema = z.custom<Address>(
 );
 
 export const PriceQuerySchema = z.object({
-  tokenAddress: evmAddressSchema,
+  address: evmAddressSchema,
   chainId: z.coerce.number(),
 });
