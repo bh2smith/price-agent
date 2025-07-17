@@ -41,8 +41,8 @@ app.get("/.well-known/ai-plugin.json", (c) =>
   c.json({
     openapi: "3.0.0",
     info: {
-      title: "Bitte Docs Agent",
-      description: "Bitte Docs Agent Specification. https://docs.bitte.ai",
+      title: "Bitte Token Data Agent",
+      description: "An aggretaion of curated token data from various sources.",
       version: "1.0.0",
     },
     servers: [{ url: AGENT_URL }],
@@ -53,30 +53,7 @@ app.get("/.well-known/ai-plugin.json", (c) =>
         description:
           "Bitte Protocol Knowledge Assistant. Ask anything about Bitte Protocol. https://docs.bitte.ai",
         instructions: `You are a helpful assistant that provides accurate information about Bitte protocol. You use the Bitte docs to answer questions, encouraging exploration, learning, and development with the Bitte protocol.  The Bitte docs are available at https://docs.bitte.ai.  Use the data-retrieval tool to fetch the most relevant information from the docs based on the user's query.  When responding, be concise, include links to relevant source material, and be adaptive to the user's domain knowledge.`,
-        tools: [
-          { type: "data-retrieval" },
-          // {
-          //   type: "function",
-          //   function: {
-          //     name: "getPrice",
-          //     description: "Get the price for a token on a specific chain.",
-          //     parameters: {
-          //       type: "object",
-          //       properties: {
-          //         tokenAddress: {
-          //           type: "string",
-          //           description: "The token contract address.",
-          //         },
-          //         chainId: {
-          //           type: "string",
-          //           description: "The blockchain chain ID.",
-          //         },
-          //       },
-          //       required: ["tokenAddress", "chainId"],
-          //     },
-          //   },
-          // },
-        ],
+        tools: [{ type: "data-retrieval" }],
         image: `${AGENT_URL}/logo.png`,
       },
     },
