@@ -1,8 +1,8 @@
 // Retrieves token prices by address from dexscreener.
 
 import { Address } from "viem";
-import { catchNativeAsset } from "./catch-eth";
-import { PriceQuery } from "./types";
+import { catchNativeAsset } from "../catch-eth";
+import { PriceQuery } from "../types";
 
 const DEXSCREENER_BASE_URL = "https://api.dexscreener.com/latest/dex/tokens";
 

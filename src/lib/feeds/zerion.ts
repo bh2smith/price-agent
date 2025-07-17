@@ -1,5 +1,5 @@
 import { ZerionAPI } from "zerion-sdk";
-import { getNativeAsset, isNativeAsset } from "./catch-eth";
+import { getNativeAsset, isNativeAsset } from "../catch-eth";
 
 const bucketUrl = "https://storage.googleapis.com/bitte-public";
 const tokensUrl = `${bucketUrl}/intents/tokens`;

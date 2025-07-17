@@ -1,7 +1,7 @@
 // Unit tests for coingecko.ts
 
 import { NATIVE_ASSET } from "@/src/lib/catch-eth";
-import { getTokenPrice } from "@/src/lib/coingecko";
+import { getTokenPrice } from "@/src/lib/feeds/coingecko";
 import { PriceQuery } from "@/src/lib/types";
 import { SAMPLE_TOKENS } from "./fixtures";
 

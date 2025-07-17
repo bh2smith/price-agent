@@ -2,7 +2,7 @@
 // Unit tests for coingecko.ts
 
 import { NATIVE_ASSET } from "@/src/lib/catch-eth";
-import { getTokenPrice } from "@/src/lib/defilama";
+import { getTokenPrice } from "@/src/lib/feeds/defilama";
 
 const USDC_BASE = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";
 const USDC_GNOSIS = "0xddafbb505ad214d7b80b1f830fccc89b60fb7a83";

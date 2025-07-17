@@ -1,5 +1,11 @@
 import { Address } from "viem";
 
+export const USDC_BASE = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";
+export const USDC_GNOSIS = "0xddafbb505ad214d7b80b1f830fccc89b60fb7a83";
+export const USDC_POLYGON = "0x2791bca1f2de4661ed88a30c99a7a9449aa84174";
+
+export const TORN_MAINNET = "0x77777feddddffc19ff86db637967013e6c6a116c";
+
 export const SAMPLE_TOKENS: Record<string, Address[]> = {
   base: [
     "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913", // USDC
