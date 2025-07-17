@@ -7,7 +7,7 @@
     "dev:agent": "next dev",
     "build": "next build",
     "deploy": "next build && make-agent deploy -u https://price-agent.vercel.app/",
-    "validate": "make-agent validate -u http://localhost:3000/.well-known/ai-plugin.json",
+    "validate": "make-agent validate -u https://price-agent.vercel.app/",
     "start": "next start",
     "lint": "next lint",
     "fmt": "prettier --write ."

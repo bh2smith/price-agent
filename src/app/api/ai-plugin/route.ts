@@ -25,7 +25,7 @@ export async function GET() {
       },
     },
     paths: {
-      "/prices": {
+      "/api/tools/prices": {
         get: {
           tags: ["prices"],
           operationId: "getPrice",
