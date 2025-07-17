@@ -1,6 +1,4 @@
 import { ZerionAPI } from "zerion-sdk";
-import { type Address, getAddress } from "viem";
-import { Network } from "near-ca";
 import { getNativeAsset, isNativeAsset } from "./catch-eth";
 
 const bucketUrl = "https://storage.googleapis.com/bitte-public";

@@ -1,5 +1,4 @@
 // Fetches token price from Coingecko
-import { Address } from "viem";
 import { catchNativeAsset } from "./catch-eth";
 import { PriceQuery } from "./types";
 
