@@ -57,7 +57,7 @@ export const CHAIN_ICONS: Record<number, string> = {
   11155111: `${chainsUrl}/eth.svg`,
 };
 
-export async function altGetTokenLogoUri(
+export async function getCowLogoUri(
   address: string,
   chainId: number,
 ): Promise<string | undefined> {
@@ -92,21 +92,23 @@ export async function getTokenMeta(
 
     const wrappedAsset = relevantChain[0].relationships.wrapped_native_fungible;
     const wethFallback = getNativeAsset(chainId).address.toLowerCase();
-    const token = await zerion.fungibles(wrappedAsset?.data.id || wethFallback);
+    const { attributes } = await zerion.fungibles(
+      wrappedAsset?.data.id || wethFallback,
+    );
     return {
       icon: NATIVE_ASSET_ICONS[chainId],
-      price: token.attributes.market_data.price,
+      price: attributes.market_data.price,
     };
   }
   try {
-    const token = await zerion.fungibles(address.toLowerCase());
+    const { attributes } = await zerion.fungibles(address.toLowerCase());
     return {
-      icon: token.attributes.icon.url,
-      price: token.attributes.market_data.price,
+      icon: attributes.icon.url,
+      price: attributes.market_data.price,
     };
   } catch (error) {
-    console.warn("Token Meta", error);
-    const icon = await altGetTokenLogoUri(address, chainId);
+    console.warn(`Token Meta not found for ${chainId}:${address}`, error);
+    const icon = await getCowLogoUri(address, chainId);
     return {
       ...(icon !== undefined && { icon }),
       price: 0,
