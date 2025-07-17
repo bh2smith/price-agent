@@ -6,7 +6,7 @@
     "dev": "concurrently \"next dev\" \"make-agent dev\"",
     "dev:agent": "next dev",
     "build": "next build",
-    "deploy": "next build && make-agent deploy -u https://evm-test-agent.vercel.app/",
+    "deploy": "next build && make-agent deploy -u https://price-agent.vercel.app/",
     "start": "next start",
     "lint": "next lint",
     "fmt": "prettier --write ."
@@ -28,6 +28,9 @@
     "@types/node": "^24.0.14",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
+    "concurrently": "^9.2.0",
+    "eslint": "^9",
+    "eslint-config-next": "^15.4.1",
     "make-agent": "^0.3.5",
     "prettier": "^3.6.2",
     "typescript": "^5.8.3"

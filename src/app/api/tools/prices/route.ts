@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     const price = getTokenPrice(query);
     return NextResponse.json({ price }, { status: 200 });
   } catch (error) {
-    const publicMessage = "Error validating payload:";
+    const publicMessage = "Error validating payload";
     console.error(publicMessage, error);
     return NextResponse.json({ error: publicMessage }, { status: 500 });
   }
@@ -28,6 +28,7 @@ interface PriceQuery {
 }
 
 function getTokenPrice(query: PriceQuery): string {
+  console.log("Handle Price Query", query);
   // TODO: Implement real price fetching logic
   return "123.45";
 }
