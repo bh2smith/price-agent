@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { PriceQuerySchema } from "@/src/app/api/schema";
-import { type Address } from "viem";
 import { PriceQuery } from "@/src/lib/types";
 import { FeedRevolver } from "@/src/lib/feed";
 
