@@ -83,6 +83,8 @@ app.get("/.well-known/ai-plugin.json", (c) =>
     paths: {
       "/prices": {
         get: {
+          tags: ["prices"],
+          operationId: "getPrice",
           summary: "Get token price",
           description:
             "Returns the price for a given token address and chain ID.",
