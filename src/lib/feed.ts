@@ -23,8 +23,9 @@ export class FeedRevolver implements FeedSource {
   }
 
   async getPrice(token: PriceQuery): Promise<number | null> {
-    // Create a copy of sources and shuffle them randomly
-    const shuffledSources = [...this.sources].sort(() => Math.random() - 0.5);
+    // Create a copy of sources and shuffle them using timestamp as seed
+    const timestamp = Date.now();
+    const shuffledSources = this.shuffleWithSeed([...this.sources], timestamp);
 
     // Try each source in random order until we get a valid price
     for (const source of shuffledSources) {
@@ -47,6 +48,25 @@ export class FeedRevolver implements FeedSource {
       `All sources failed to return a valid price for ${JSON.stringify(token, null, 2)}`,
     );
     return null;
+  }
+
+  private shuffleWithSeed<T>(array: T[], seed: number): T[] {
+    const shuffled = [...array];
+    let currentSeed = seed;
+
+    // Simple seeded random number generator
+    const seededRandom = () => {
+      currentSeed = (currentSeed * 9301 + 49297) % 233280;
+      return currentSeed / 233280;
+    };
+
+    // Fisher-Yates shuffle with seeded random
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(seededRandom() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    return shuffled;
   }
 }
 
