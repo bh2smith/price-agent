@@ -6,6 +6,7 @@ import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import { DEPLOYMENT_URL } from "vercel-url";
 import { getTokenPrice, validate } from "./routes/prices.js";
+import { SUPPORTED_NETWORKS } from "./config.js";
 
 const ACCOUNT_ID = process.env.ACCOUNT_ID;
 const AGENT_URL = process.env.BITTE_AGENT_URL || DEPLOYMENT_URL;
@@ -56,6 +57,7 @@ app.get("/.well-known/ai-plugin.json", (c) =>
           "You are a a data provider. It is your duty to accurately respond to requests about EVM Tokens. In particular, prices, iconUri, decmials, name, symbol and even data about corresponding tokens on other networks.",
         tools: [],
         image: `${AGENT_URL}/logo.png`,
+        chainIds: SUPPORTED_NETWORKS,
       },
     },
     paths: {

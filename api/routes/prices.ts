@@ -1,9 +1,9 @@
 import { HonoRequest } from "hono";
 import { ValidationResult } from "../types";
-// import { type Address, isAddress } from "viem";
+import { type Address, isAddress } from "viem";
 
 export interface PriceQuery {
-  tokenAddress: string;
+  tokenAddress: Address;
   chainId: number;
 }
 
@@ -21,10 +21,10 @@ export function validate(req: HonoRequest): ValidationResult<PriceQuery> {
     return { ok: false, error: "chainId must be an integer" };
   }
 
-  //   // Validate tokenAddress is a valid address
-  //   if (!isAddress(tokenAddress)) {
-  //     return { ok: false, error: "tokenAddress must be a valid address" };
-  //   }
+  // Validate tokenAddress is a valid address
+  if (!isAddress(tokenAddress)) {
+    return { ok: false, error: "tokenAddress must be a valid address" };
+  }
 
   return { ok: true, query: { tokenAddress, chainId: Number(chainId) } };
 }
