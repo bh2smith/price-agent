@@ -9,7 +9,7 @@ const USDC_GNOSIS = "0xddafbb505ad214d7b80b1f830fccc89b60fb7a83";
 const USDC_POLYGON = "0x2791bca1f2de4661ed88a30c99a7a9449aa84174";
 
 // Rate limits.
-describe.only("defilama", () => {
+describe.skip("defilama", () => {
   it("should return token prices on a few networks", async () => {
     await expect(
       getTokenPrice({ address: USDC_BASE, chainId: 8453 }),

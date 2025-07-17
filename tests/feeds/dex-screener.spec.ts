@@ -8,8 +8,8 @@ import {
 } from "@/src/lib/feeds/dex-screener";
 
 // Rate limits.
-describe("dexscreener", () => {
-  it.only("should return token prices on a few networks", async () => {
+describe.skip("dexscreener", () => {
+  it("should return token prices on a few networks", async () => {
     const gno = "0x9c58bacc331c9aa871afd802db6379a98e80cedb";
 
     // await expect(

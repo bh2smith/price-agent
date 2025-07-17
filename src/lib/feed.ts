@@ -34,6 +34,7 @@ export class FeedRevolver implements FeedSource {
       try {
         const price = await source.getPrice(token);
         if (price !== null) {
+          console.log(`${source.name} found price ${price}`);
           return price;
         }
         console.log(`${source.name} returned null price`);

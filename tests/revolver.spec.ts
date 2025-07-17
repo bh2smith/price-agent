@@ -10,16 +10,16 @@ import { TORN_MAINNET } from "./fixtures";
 // Rate limits.
 describe("revolver", () => {
   it("should return token prices on a few networks", async () => {
+    const gnosis_weth = "0x6a023ccd1ff6f2045c3309768ead9e68f978f6e1";
     const revolver = new FeedRevolver([
       new CoingeckoFeed(),
       new DefilamaFeed(),
       new DexScreenerFeed(),
     ]);
     const price = await revolver.getPrice({
-      address: TORN_MAINNET,
-      chainId: 1,
+      address: gnosis_weth,
+      chainId: 100,
     });
-    console.log(`torn price`, price);
     expect(price).toBeGreaterThan(0);
   });
 });
