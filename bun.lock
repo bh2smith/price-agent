@@ -4,9 +4,11 @@
     "": {
       "name": "price-agent",
       "dependencies": {
+        "price-agent": ".",
         "@bitte-ai/agent-sdk": "^0.2.7",
         "near-ca": "^0.10.0",
         "next": "^15.4.1",
+        "price-agent": ".",
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
         "redoc": "^2.5.0",
@@ -1362,6 +1364,10 @@
 
     "prettier": ["prettier@3.6.2", "", { "bin": { "prettier": "bin/prettier.cjs" } }, "sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ=="],
 
+    "price-agent": ["price-agent@file:", { "dependencies": { "@bitte-ai/agent-sdk": "^0.2.7", "near-ca": "^0.10.0", "next": "^15.4.1", "price-agent": ".", "react": "^19.1.0", "react-dom": "^19.1.0", "redoc": "^2.5.0", "vercel-url": "^0.2.8", "viem": "^2.32.0", "zerion-sdk": "^0.1.4", "zod": "^4.0.5" }, "devDependencies": { "@types/node": "^24.0.14", "@types/react": "^19.1.8", "@types/react-dom": "^19.1.6", "make-agent": "^0.3.5", "prettier": "^3.6.2", "typescript": "^5.8.3" } }],
+
+    "price-agent": ["price-agent@file:", { "dependencies": { "@bitte-ai/agent-sdk": "^0.2.7", "near-ca": "^0.10.0", "next": "^15.4.1", "price-agent": ".", "react": "^19.1.0", "react-dom": "^19.1.0", "redoc": "^2.5.0", "vercel-url": "^0.2.8", "viem": "^2.32.0", "zerion-sdk": "^0.1.4", "zod": "^4.0.5" }, "devDependencies": { "@types/node": "^24.0.14", "@types/react": "^19.1.8", "@types/react-dom": "^19.1.6", "make-agent": "^0.3.5", "prettier": "^3.6.2", "typescript": "^5.8.3" } }],
+
     "prismjs": ["prismjs@1.30.0", "", {}, "sha512-DEvV2ZF2r2/63V+tK8hQvrR2ZGn10srHbXviTlcv7Kpzw8jWiNTqbVgjO3IY8RxrrOUF8VPMQQFysYYYv0YZxw=="],
 
     "process-nextick-args": ["process-nextick-args@2.0.1", "", {}, "sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag=="],
@@ -1893,6 +1899,10 @@
     "near-api-js/http-errors": ["http-errors@1.7.2", "", { "dependencies": { "depd": "~1.1.2", "inherits": "2.0.3", "setprototypeof": "1.1.1", "statuses": ">= 1.5.0 < 2", "toidentifier": "1.0.0" } }, "sha512-uUQBt3H/cSIVfch6i1EuPNy/YsRSOUBXTVfZ+yR7Zjez3qjBz6i9+i4zjNaoqcoFVI4lQJ5plg63TvGfRSDCRg=="],
 
     "obj-multiplex/readable-stream": ["readable-stream@2.3.8", "", { "dependencies": { "core-util-is": "~1.0.0", "inherits": "~2.0.3", "isarray": "~1.0.0", "process-nextick-args": "~2.0.0", "safe-buffer": "~5.1.1", "string_decoder": "~1.1.1", "util-deprecate": "~1.0.1" } }, "sha512-8p0AUk4XODgIewSi0l8Epjs+EVnWiK7NoDIEGU0HhE7+ZyY8D1IMY7odu5lRrFXGg71L15KG8QrPmum45RTtdA=="],
+
+    "price-agent/price-agent": ["price-agent@file:.", {}],
+
+    "price-agent/price-agent": ["price-agent@file:.", {}],
 
     "qrcode/yargs": ["yargs@15.4.1", "", { "dependencies": { "cliui": "^6.0.0", "decamelize": "^1.2.0", "find-up": "^4.1.0", "get-caller-file": "^2.0.1", "require-directory": "^2.1.1", "require-main-filename": "^2.0.0", "set-blocking": "^2.0.0", "string-width": "^4.2.0", "which-module": "^2.0.0", "y18n": "^4.0.0", "yargs-parser": "^18.1.2" } }, "sha512-aePbxDmcYW++PaqBsJ+HYUFwCdv4LVvdnhBy78E57PIor8/OVvhMrADFFEDh8DHDFRv/O9i3lPhsENjO7QX0+A=="],
 
