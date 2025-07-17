@@ -43,9 +43,9 @@ export async function GET() {
                   schema: {
                     type: "object",
                     properties: {
-                      tokenAddress: { type: "string" },
-                      chainId: { type: "string" },
-                      price: { type: "string" },
+                      address: { type: "string" },
+                      chainId: { type: "number" },
+                      price: { type: "number" },
                     },
                   },
                 },
