@@ -14,6 +14,14 @@ export class FeedRevolver implements FeedSource {
     this.sources = sources;
   }
 
+  static withAllSources(): FeedRevolver {
+    return new FeedRevolver([
+      new CoingeckoFeed(),
+      new DefilamaFeed(),
+      new DexScreenerFeed(),
+    ]);
+  }
+
   async getPrice(token: PriceQuery): Promise<number | null> {
     // Create a copy of sources and shuffle them randomly
     const shuffledSources = [...this.sources].sort(() => Math.random() - 0.5);
