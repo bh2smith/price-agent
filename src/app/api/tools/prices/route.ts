@@ -14,7 +14,7 @@ export async function GET(request: Request) {
   }
   console.log("prices/", validationResult.query);
   try {
-    const price = getTokenPrice(validationResult.query);
+    const price = await getTokenPrice(validationResult.query);
     return NextResponse.json({ price }, { status: 200 });
   } catch (error) {
     const publicMessage = "Error validating payload";
@@ -40,6 +40,7 @@ function validateQuery(params: URLSearchParams): ValidationResult<PriceQuery> {
 async function getTokenPrice(query: PriceQuery): Promise<number> {
   const revolver = FeedRevolver.withAllSources();
   const price = await revolver.getPrice(query);
+  console.log(`Got price: ${price} for ${query.chainId}:${query.address}`);
   if (!price) {
     throw new Error(`No price found for ${query.chainId}:${query.address}`);
   }
