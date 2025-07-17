@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { PriceQuerySchema } from "@/src/app/api/schema";
 import { type Address } from "viem";
+import { PriceQuery } from "@/src/lib/types";
+import { FeedRevolver } from "@/src/lib/feed";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -36,22 +38,20 @@ function validateQuery(params: URLSearchParams): ValidationResult<PriceQuery> {
   return { ok: true, query: result.data };
 }
 
-interface PriceQuery {
-  address: Address;
-  chainId: number;
-}
-
 interface PriceResponse {
   address: Address;
   chainId: number;
   price: number;
 }
 
-function getTokenPrice(query: PriceQuery): PriceResponse {
-  console.log("Handle Price Query", query);
-  // TODO: Implement real price fetching logic
+async function getTokenPrice(query: PriceQuery): Promise<PriceResponse> {
+  const revolver = FeedRevolver.withAllSources();
+  const price = await revolver.getPrice(query);
+  if (!price) {
+    throw new Error(`No price found for ${query.chainId}:${query.address}`);
+  }
   return {
     ...query,
-    price: 123.45,
+    price,
   };
 }

@@ -1,41 +1,9 @@
 import { ZerionAPI } from "zerion-sdk";
-import { type Address, getAddress } from "viem";
-import { Network } from "near-ca";
+import { getNativeAsset, isNativeAsset } from "../catch-eth";
 
 const bucketUrl = "https://storage.googleapis.com/bitte-public";
 const tokensUrl = `${bucketUrl}/intents/tokens`;
 const chainsUrl = `${bucketUrl}/intents/chains`;
-
-export const NATIVE_ASSET = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
-
-export function isNativeAsset(token?: string): boolean {
-  return (
-    token === undefined || token.toLowerCase() === NATIVE_ASSET.toLowerCase()
-  );
-}
-
-type NativeAsset = {
-  address: Address;
-  symbol: string;
-  scanUrl: string;
-  decimals: number;
-};
-
-export function getNativeAsset(chainId: number): NativeAsset {
-  const network = Network.fromChainId(chainId);
-  const wethAddress = network.nativeCurrency.wrappedAddress;
-  if (!wethAddress) {
-    throw new Error(
-      `Couldn't find wrapped address for Network ${network.name} (chainId=${chainId})`,
-    );
-  }
-  return {
-    address: getAddress(wethAddress),
-    symbol: network.nativeCurrency.symbol,
-    scanUrl: `${network.scanUrl}/address/${wethAddress}`,
-    decimals: network.nativeCurrency.decimals,
-  };
-}
 
 export const NATIVE_ASSET_ICONS: Record<number, string> = {
   1: `${tokensUrl}/eth_token.svg`,
@@ -91,7 +59,7 @@ export async function getTokenMeta(
     }
 
     const wrappedAsset = relevantChain[0].relationships.wrapped_native_fungible;
-    const wethFallback = getNativeAsset(chainId).address.toLowerCase();
+    const wethFallback = getNativeAsset(chainId).toLowerCase();
     const { attributes } = await zerion.fungibles(
       wrappedAsset?.data.id || wethFallback,
     );
