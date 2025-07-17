@@ -1,11 +1,11 @@
-import { spawn } from 'node:child_process';
+import { spawn } from "node:child_process";
 import { DEPLOYMENT_URL } from "vercel-url";
 
 const AGENT_URL = process.env.BITTE_AGENT_URL || DEPLOYMENT_URL;
 
 export function getAgentUrl(): string {
   // 1. Check for custom URL from command line
-  const urlArgIndex = process.argv.indexOf('--url');
+  const urlArgIndex = process.argv.indexOf("--url");
   if (urlArgIndex !== -1 && process.argv[urlArgIndex + 1]) {
     return process.argv[urlArgIndex + 1];
   }
@@ -26,13 +26,15 @@ export function getAgentUrl(): string {
 const command = process.argv[2]; // 'validate' or 'deploy'
 
 const agentUrl = getAgentUrl();
-console.log(`🚀 ${command === 'validate' ? 'Validating' : 'Deploying'} agent at: ${agentUrl}`);
+console.log(
+  `🚀 ${command === "validate" ? "Validating" : "Deploying"} agent at: ${agentUrl}`,
+);
 
 // Spawn make-agent command with the specified action
-const child = spawn('bun', ['make-agent', command, '--url', agentUrl], {
-  stdio: 'inherit'
+const child = spawn("bun", ["make-agent", command, "--url", agentUrl], {
+  stdio: "inherit",
 });
 
-child.on('close', (code) => {
+child.on("close", (code) => {
   process.exit(code);
 });
