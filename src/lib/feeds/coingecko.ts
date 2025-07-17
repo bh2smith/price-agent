@@ -2,7 +2,7 @@
 import { catchNativeAsset } from "../catch-eth";
 import { PriceQuery } from "../types";
 
-const CG_BASE_URL = "https://api.coingecko.com/api/v3";
+const CG_BASE_URL = "https://api.coingecko.com/api/v3/simple/token_price";
 const CG_CHAIN_MAP: Record<number, string> = {
   1: "ethereum",
   10: "optimistic-ethereum",
@@ -15,21 +15,26 @@ const CG_CHAIN_MAP: Record<number, string> = {
 
 export async function getTokenPrice(token: PriceQuery): Promise<number | null> {
   const address = await catchNativeAsset(token);
+  const addressKey = `${token.chainId}:${token.address.toLowerCase()}`;
   const chain = CG_CHAIN_MAP[token.chainId];
   if (!chain) {
-    console.warn(`Chain ${token.chainId} not supported by Coingecko`);
+    console.warn(`Unsupported chain ID: ${token.chainId}`);
     return null;
   }
-  const response = await fetch(
-    `${CG_BASE_URL}/simple/token_price/${chain}?contract_addresses=${address}&vs_currencies=usd`,
-  );
+  const url = `${CG_BASE_URL}/${chain}?contract_addresses=${address.toLowerCase()}&vs_currencies=usd`;
+  const response = await fetch(url);
   if (!response.ok) {
-    console.warn(
-      `Coingecko error for ${token.chainId}:${token.address}`,
-      response,
-    );
+    console.warn(`Coingecko error for ${addressKey}`, response);
     return null;
   }
   const data = await response.json();
-  return data[address.toLowerCase()].usd;
+
+  const tokenData = data[address.toLowerCase()];
+
+  if (!tokenData || typeof tokenData.usd !== "number") {
+    console.warn(`No USD price data found for ${addressKey}`);
+    return null;
+  }
+
+  return tokenData.usd;
 }

@@ -10,8 +10,8 @@ const USDC_GNOSIS = "0xddafbb505ad214d7b80b1f830fccc89b60fb7a83";
 const USDC_POLYGON = "0x2791bca1f2de4661ed88a30c99a7a9449aa84174";
 
 // Rate limits.
-describe.skip("coingecko", () => {
-  it("should return token prices on a few networks", async () => {
+describe("coingecko", () => {
+  it.skip("should return token prices on a few networks", async () => {
     await expect(
       getTokenPrice({ address: USDC_BASE, chainId: 8453 }),
     ).resolves.not.toBeNull();
@@ -23,7 +23,7 @@ describe.skip("coingecko", () => {
     ).resolves.not.toBeNull();
   });
 
-  it("native asset prices", async () => {
+  it.skip("native asset prices", async () => {
     for (const chainId of [1, 137, 100]) {
       const price = await getTokenPrice({ address: NATIVE_ASSET, chainId });
       console.log(`${chainId} price`, price);
