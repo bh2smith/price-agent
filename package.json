@@ -1,18 +1,20 @@
 {
-	"name": "price-agent",
-	"type": "module",
-	"scripts": {
-		"vercel:dev": "vercel dev",
-		"vercel:deploy": "vercel deploy",
-		"validate": "bun lib/script-helper.ts validate --url",
-		"deploy": "bun lib/script-helper.ts deploy --url"
-	},
-	"dependencies": {
-		"hono": "^4.8.5",
-		"vercel-url": "^0.2.8"
-	},
-	"devDependencies": {
-		"@types/node": "^24.0.14",
-		"make-agent": "^0.3.5"
-	}
+  "name": "price-agent",
+  "type": "module",
+  "scripts": {
+    "vercel:dev": "vercel dev",
+    "vercel:deploy": "vercel deploy",
+    "validate": "bun lib/script-helper.ts validate --url",
+    "deploy": "bun lib/script-helper.ts deploy --url",
+    "fmt": "prettier --write ."
+  },
+  "dependencies": {
+    "hono": "^4.8.5",
+    "vercel-url": "^0.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.14",
+    "make-agent": "^0.3.5",
+    "prettier": "^3.6.2"
+  }
 }

@@ -1,28 +1,28 @@
 {
-	"$schema": "https://openapi.vercel.sh/vercel.json",
-	"rewrites": [{ "source": "/(.*)", "destination": "/api" }],
-	"headers": [
-		{
-			"source": "/(.*)",
-			"headers": [
-				{
-					"key": "Access-Control-Allow-Origin",
-					"value": "*"
-				},
-				{
-					"key": "Access-Control-Allow-Methods",
-					"value": "GET, POST, OPTIONS"
-				},
-				{
-					"key": "Access-Control-Allow-Headers",
-					"value": "*"
-				},
-				{
-					"key": "Access-Control-Max-Age",
-					"value": "86400"
-				}
-			]
-		}
-	],
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [{ "source": "/(.*)", "destination": "/api" }],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Max-Age",
+          "value": "86400"
+        }
+      ]
+    }
+  ],
   "outputDirectory": "public"
 }

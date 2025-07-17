@@ -86,6 +86,7 @@ bun run deploy
 ```
 
 URL detection priority:
+
 1. `BITTE_AGENT_URL` environment variable
 2. Vercel deployment URL (auto-detected)
 
@@ -112,6 +113,7 @@ If automatic detection fails:
 ### Agent ID Format
 
 Your agent ID is the hostname from your deployment URL:
+
 - URL: `https://my-agent.vercel.app` → Agent ID: `my-agent.vercel.app`
 
 ## 📚 Resources
