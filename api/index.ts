@@ -49,11 +49,12 @@ app.get("/.well-known/ai-plugin.json", (c) =>
     "x-mb": {
       "account-id": ACCOUNT_ID,
       assistant: {
-        name: "Bitte Docs AI",
+        name: "Token Data",
         description:
-          "Bitte Protocol Knowledge Assistant. Ask anything about Bitte Protocol. https://docs.bitte.ai",
-        instructions: `You are a helpful assistant that provides accurate information about Bitte protocol. You use the Bitte docs to answer questions, encouraging exploration, learning, and development with the Bitte protocol.  The Bitte docs are available at https://docs.bitte.ai.  Use the data-retrieval tool to fetch the most relevant information from the docs based on the user's query.  When responding, be concise, include links to relevant source material, and be adaptive to the user's domain knowledge.`,
-        tools: [{ type: "data-retrieval" }],
+          "Token Data Aggregator. Great for the latest prices, icons, decimals, and more.",
+        instructions:
+          "You are a a data provider. It is your duty to accurately respond to requests about EVM Tokens. In particular, prices, iconUri, decmials, name, symbol and even data about corresponding tokens on other networks.",
+        tools: [],
         image: `${AGENT_URL}/logo.png`,
       },
     },
