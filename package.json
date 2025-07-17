@@ -1,22 +1,32 @@
 {
   "name": "price-agent",
-  "type": "module",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "vercel:dev": "vercel dev",
-    "vercel:deploy": "vercel deploy",
-    "validate": "bun lib/script-helper.ts validate --url",
-    "deploy": "bun lib/script-helper.ts deploy --url",
+    "dev": "concurrently \"next dev\" \"make-agent dev\"",
+    "dev:agent": "next dev",
+    "build": "next build",
+    "deploy": "next build && make-agent deploy -u https://evm-test-agent.vercel.app/",
+    "start": "next start",
+    "lint": "next lint",
     "fmt": "prettier --write ."
   },
   "dependencies": {
-    "hono": "^4.8.5",
+    "@bitte-ai/agent-sdk": "^0.2.7",
     "near-ca": "^0.10.0",
+    "next": "^15.4.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "redoc": "^2.5.0",
     "vercel-url": "^0.2.8",
     "viem": "^2.32.0",
-    "zerion-sdk": "^0.1.4"
+    "zerion-sdk": "^0.1.4",
+    "zod": "^4.0.5"
   },
   "devDependencies": {
     "@types/node": "^24.0.14",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
     "make-agent": "^0.3.5",
     "prettier": "^3.6.2",
     "typescript": "^5.8.3"
