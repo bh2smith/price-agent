@@ -1,6 +1,7 @@
 // Fetches token price from Coingecko
 import { catchNativeAsset } from "../catch-eth";
 import { PriceQuery } from "../types";
+import { FeedSource } from "./interface";
 
 const CG_BASE_URL = "https://api.coingecko.com/api/v3/simple/token_price";
 const CG_CHAIN_MAP: Record<number, string> = {
@@ -37,4 +38,13 @@ export async function getTokenPrice(token: PriceQuery): Promise<number | null> {
   }
 
   return tokenData.usd;
+}
+
+export class CoingeckoFeed implements FeedSource {
+  public get name(): string {
+    return "Coingecko";
+  }
+  async getPrice(token: PriceQuery): Promise<number | null> {
+    return getTokenPrice(token);
+  }
 }

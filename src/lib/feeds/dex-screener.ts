@@ -3,6 +3,7 @@
 import { Address } from "viem";
 import { catchNativeAsset } from "../catch-eth";
 import { PriceQuery } from "../types";
+import { FeedSource } from "./interface";
 
 const DEXSCREENER_BASE_URL = "https://api.dexscreener.com/latest/dex/tokens";
 
@@ -110,4 +111,13 @@ function getTokenUsdPrice(pair: DexPair, tokenAddress: Address): number | null {
   }
 
   return null;
+}
+
+export class DexScreenerFeed implements FeedSource {
+  public get name(): string {
+    return "DexScreener";
+  }
+  async getPrice(token: PriceQuery): Promise<number | null> {
+    return getTokenPrice(token);
+  }
 }
