@@ -1,8 +1,11 @@
 // Class for fetching token prices from various sources.
 
-import { getTokenPrice as coingeckoPrice } from "./feeds/coingecko";
-import { getTokenPrice as defilamaPrice } from "./feeds/defilama";
-import { getTokenPrice as dexscreenerPrice } from "./feeds/dex-screener";
+import { getAlchemyKey } from "../app/config";
+import { AlchemyFeed } from "./feeds/alchemy";
+import { CoingeckoFeed } from "./feeds/coingecko";
+import { DefilamaFeed } from "./feeds/defilama";
+import { DexScreenerFeed } from "./feeds/dex-screener";
+import { FeedSource } from "./feeds/interface";
 import { PriceQuery } from "./types";
 
 export class FeedRevolver implements FeedSource {
@@ -19,6 +22,7 @@ export class FeedRevolver implements FeedSource {
       new CoingeckoFeed(),
       new DefilamaFeed(),
       new DexScreenerFeed(),
+      new AlchemyFeed(getAlchemyKey()),
     ]);
   }
 
@@ -67,37 +71,5 @@ export class FeedRevolver implements FeedSource {
     }
 
     return shuffled;
-  }
-}
-
-export interface FeedSource {
-  name: string;
-  getPrice(token: PriceQuery): Promise<number | null>;
-}
-
-export class CoingeckoFeed implements FeedSource {
-  public get name(): string {
-    return "Coingecko";
-  }
-  async getPrice(token: PriceQuery): Promise<number | null> {
-    return coingeckoPrice(token);
-  }
-}
-
-export class DefilamaFeed implements FeedSource {
-  public get name(): string {
-    return "Defilama";
-  }
-  async getPrice(token: PriceQuery): Promise<number | null> {
-    return defilamaPrice(token);
-  }
-}
-
-export class DexScreenerFeed implements FeedSource {
-  public get name(): string {
-    return "DexScreener";
-  }
-  async getPrice(token: PriceQuery): Promise<number | null> {
-    return dexscreenerPrice(token);
   }
 }

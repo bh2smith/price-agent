@@ -2,6 +2,7 @@
 
 import { catchNativeAsset } from "../catch-eth";
 import { PriceQuery } from "../types";
+import { FeedSource } from "./interface";
 
 const DEFILAMA_BASE_URL = "https://coins.llama.fi";
 
@@ -41,4 +42,13 @@ export async function getTokenPrice(token: PriceQuery): Promise<number | null> {
 
   const data = await response.json();
   return data.coins?.[`${chain}:${address}`]?.price || null;
+}
+
+export class DefilamaFeed implements FeedSource {
+  public get name(): string {
+    return "Defilama";
+  }
+  async getPrice(token: PriceQuery): Promise<number | null> {
+    return getTokenPrice(token);
+  }
 }

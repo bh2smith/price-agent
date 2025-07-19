@@ -29,6 +29,10 @@ export function getZerionKey(): string {
   return getEnvVar("ZERION_KEY");
 }
 
+export function getAlchemyKey(): string {
+  return getEnvVar("ALCHEMY_KEY");
+}
+
 const SUPPORTED_NETWORKS = [
   1, // mainnet
   100, // gnosis
