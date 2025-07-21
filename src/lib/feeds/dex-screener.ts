@@ -24,7 +24,7 @@ export interface DexPair {
   txns: TransactionStats;
   volume: VolumeStats;
   priceChange: PriceChangeStats;
-  liquidity: LiquidityStats;
+  liquidity?: LiquidityStats;
   fdv: number;
   marketCap: number;
   pairCreatedAt: number;
@@ -69,11 +69,16 @@ export interface LiquidityStats {
   quote: number;
 }
 
-export async function getTokenPrice(token: PriceQuery): Promise<number | null> {
-  const address = await catchNativeAsset(token);
-  const response = await fetch(`${DEXSCREENER_BASE_URL}/${address}`);
-  const data = (await response.json()) as DexscreenerResponse;
-  return evaluatePrice(data.pairs, token.address);
+export class DexScreenerFeed implements FeedSource {
+  public get name(): string {
+    return "DexScreener";
+  }
+  async getPrice(token: PriceQuery): Promise<number | null> {
+    const address = await catchNativeAsset(token);
+    const response = await fetch(`${DEXSCREENER_BASE_URL}/${address}`);
+    const data = (await response.json()) as DexscreenerResponse;
+    return evaluatePrice(data.pairs, token.address);
+  }
 }
 
 export function evaluatePrice(
@@ -81,7 +86,7 @@ export function evaluatePrice(
   address: Address,
 ): number | null {
   const filteredPairs = pairs.filter(
-    (p) => p.liquidity.usd > 10000 && parseFloat(p.priceUsd) > 0,
+    (p) => p.liquidity && p.liquidity.usd > 10000 && parseFloat(p.priceUsd) > 0,
   );
   if (filteredPairs.length === 0) {
     return null;
@@ -111,13 +116,4 @@ function getTokenUsdPrice(pair: DexPair, tokenAddress: Address): number | null {
   }
 
   return null;
-}
-
-export class DexScreenerFeed implements FeedSource {
-  public get name(): string {
-    return "DexScreener";
-  }
-  async getPrice(token: PriceQuery): Promise<number | null> {
-    return getTokenPrice(token);
-  }
 }
