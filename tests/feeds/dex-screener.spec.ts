@@ -3,12 +3,13 @@
 import { NATIVE_ASSET } from "@/src/lib/catch-eth";
 import {
   DexPair,
+  DexScreenerFeed,
   evaluatePrice,
-  getTokenPrice,
 } from "@/src/lib/feeds/dex-screener";
+import { TORN_MAINNET } from "../fixtures";
 
 // Rate limits.
-describe.skip("dexscreener", () => {
+describe("dexscreener", () => {
   it("should return token prices on a few networks", async () => {
     const gno = "0x9c58bacc331c9aa871afd802db6379a98e80cedb";
 
@@ -123,10 +124,18 @@ describe.skip("dexscreener", () => {
   });
 
   it("native asset prices", async () => {
+    const feed = new DexScreenerFeed();
     for (const chainId of [1, 137, 100]) {
-      const price = await getTokenPrice({ address: NATIVE_ASSET, chainId });
+      const price = await feed.getPrice({ address: NATIVE_ASSET, chainId });
       console.log(`${chainId} price`, price);
       expect(price).toBeGreaterThan(0);
     }
+  });
+
+  it.only("torn price", async () => {
+    const feed = new DexScreenerFeed();
+    const price = await feed.getPrice(TORN_MAINNET);
+    console.log(`torn price`, price);
+    expect(price).toBeGreaterThan(0);
   });
 });

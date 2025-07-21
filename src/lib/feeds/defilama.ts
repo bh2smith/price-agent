@@ -17,38 +17,34 @@ const chainMap: Record<number, string> = {
   100: "gnosis",
 };
 
-export async function getTokenPrice(token: PriceQuery): Promise<number | null> {
-  const address = await catchNativeAsset(token);
-
-  const chain = chainMap[token.chainId];
-  if (!chain) {
-    console.warn(`Unsupported chain ID: ${token.chainId}`);
-    return null;
-  }
-
-  const response = await fetch(
-    `${DEFILAMA_BASE_URL}/prices/current/${chain}:${address}?searchWidth=4h`,
-    {
-      headers: {
-        accept: "application/json",
-      },
-    },
-  );
-
-  if (!response.ok) {
-    console.warn(`DeFi Lama: Failed to fetch price: ${response.statusText}`);
-    return null;
-  }
-
-  const data = await response.json();
-  return data.coins?.[`${chain}:${address}`]?.price || null;
-}
-
 export class DefilamaFeed implements FeedSource {
   public get name(): string {
     return "Defilama";
   }
   async getPrice(token: PriceQuery): Promise<number | null> {
-    return getTokenPrice(token);
+    const address = await catchNativeAsset(token);
+
+    const chain = chainMap[token.chainId];
+    if (!chain) {
+      console.warn(`Unsupported chain ID: ${token.chainId}`);
+      return null;
+    }
+
+    const response = await fetch(
+      `${DEFILAMA_BASE_URL}/prices/current/${chain}:${address}?searchWidth=4h`,
+      {
+        headers: {
+          accept: "application/json",
+        },
+      },
+    );
+
+    if (!response.ok) {
+      console.warn(`DeFi Lama: Failed to fetch price: ${response.statusText}`);
+      return null;
+    }
+
+    const data = await response.json();
+    return data.coins?.[`${chain}:${address}`]?.price || null;
   }
 }

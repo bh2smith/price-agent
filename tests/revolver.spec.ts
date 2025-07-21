@@ -1,25 +1,33 @@
 // Unit tests for coingecko.ts
+import { FeedRevolver } from "@/src/lib/feed";
+import { TORN_MAINNET, XCOMB_GNOSIS, TRUMP_BASE } from "./fixtures";
 import {
+  AlchemyFeed,
   CoingeckoFeed,
   DefilamaFeed,
   DexScreenerFeed,
-  FeedRevolver,
-} from "@/src/lib/feed";
-import { TORN_MAINNET } from "./fixtures";
+  ZerionFeed,
+} from "@/src/lib/feeds";
+import { getAlchemyKey, getZerionKey } from "@/src/app/config";
+import { PriceQuery } from "@/src/lib/types";
 
 // Rate limits.
 describe("revolver", () => {
   it("should return token prices on a few networks", async () => {
-    const gnosis_weth = "0x6a023ccd1ff6f2045c3309768ead9e68f978f6e1";
     const revolver = new FeedRevolver([
+      new AlchemyFeed(getAlchemyKey()),
       new CoingeckoFeed(),
       new DefilamaFeed(),
       new DexScreenerFeed(),
+      new ZerionFeed(getZerionKey()),
     ]);
-    const price = await revolver.getPrice({
-      address: gnosis_weth,
-      chainId: 100,
-    });
-    expect(price).toBeGreaterThan(0);
+    const prices = await Promise.all(
+      [TORN_MAINNET, XCOMB_GNOSIS, TRUMP_BASE].map(async (token) => {
+        const price = await revolver.getPrice(token);
+        expect(price).toBeGreaterThan(0);
+        return price;
+      }),
+    );
+    console.log(prices);
   });
 });

@@ -22,7 +22,7 @@
     "redoc": "^2.5.0",
     "vercel-url": "^0.2.8",
     "viem": "^2.33.0",
-    "zerion-sdk": "^0.1.4",
+    "zerion-sdk": "^0.1.5",
     "zod": "^4.0.5"
   },
   "devDependencies": {
