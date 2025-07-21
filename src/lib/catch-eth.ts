@@ -1,5 +1,5 @@
 import { Network } from "near-ca";
-import { PriceQuery } from "./types";
+import { TokenQuery } from "./types";
 import { Address, getAddress } from "viem";
 
 export const NATIVE_ASSET = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
@@ -24,6 +24,6 @@ export function getNativeAsset(chainId: number): Address {
 export async function catchNativeAsset({
   address,
   chainId,
-}: PriceQuery): Promise<Address> {
+}: TokenQuery): Promise<Address> {
   return isNativeAsset(address) ? getNativeAsset(chainId) : address;
 }

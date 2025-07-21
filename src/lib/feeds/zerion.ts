@@ -1,9 +1,9 @@
 import { ZerionAPI } from "zerion-sdk";
 import { catchNativeAsset } from "../catch-eth";
-import { PriceQuery } from "../types";
-import { FeedSource } from "./interface";
+import { TokenQuery } from "../types";
+import { PriceFeed } from "./interface";
 
-export class ZerionFeed implements FeedSource {
+export class ZerionFeed implements PriceFeed {
   public get name(): string {
     return "Zerion";
   }
@@ -14,7 +14,7 @@ export class ZerionFeed implements FeedSource {
     this.apiKey = apiKey;
   }
 
-  async getPrice(token: PriceQuery): Promise<number | null> {
+  async getPrice(token: TokenQuery): Promise<number | null> {
     const address = await catchNativeAsset(token);
     const zerion = new ZerionAPI(this.apiKey);
 

@@ -2,7 +2,7 @@
 
 import { NATIVE_ASSET } from "@/src/lib/catch-eth";
 import { getTokenPrice } from "@/src/lib/feeds/coingecko";
-import { PriceQuery } from "@/src/lib/types";
+import { TokenQuery } from "@/src/lib/types";
 import { SAMPLE_TOKENS } from "../fixtures";
 
 const USDC_BASE = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";
