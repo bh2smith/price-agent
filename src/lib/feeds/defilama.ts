@@ -1,8 +1,8 @@
 // Query DefiLama API for token prices.
 
 import { catchNativeAsset } from "../catch-eth";
-import { PriceQuery } from "../types";
-import { FeedSource } from "./interface";
+import { TokenQuery } from "../types";
+import { PriceFeed } from "./interface";
 
 const DEFILAMA_BASE_URL = "https://coins.llama.fi";
 
@@ -17,11 +17,11 @@ const chainMap: Record<number, string> = {
   100: "gnosis",
 };
 
-export class DefilamaFeed implements FeedSource {
+export class DefilamaFeed implements PriceFeed {
   public get name(): string {
     return "Defilama";
   }
-  async getPrice(token: PriceQuery): Promise<number | null> {
+  async getPrice(token: TokenQuery): Promise<number | null> {
     const address = await catchNativeAsset(token);
 
     const chain = chainMap[token.chainId];

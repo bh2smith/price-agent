@@ -2,8 +2,8 @@
 
 import { Address } from "viem";
 import { catchNativeAsset } from "../catch-eth";
-import { PriceQuery } from "../types";
-import { FeedSource } from "./interface";
+import { TokenQuery } from "../types";
+import { PriceFeed } from "./interface";
 
 const DEXSCREENER_BASE_URL = "https://api.dexscreener.com/latest/dex/tokens";
 
@@ -69,11 +69,11 @@ export interface LiquidityStats {
   quote: number;
 }
 
-export class DexScreenerFeed implements FeedSource {
+export class DexScreenerFeed implements PriceFeed {
   public get name(): string {
     return "DexScreener";
   }
-  async getPrice(token: PriceQuery): Promise<number | null> {
+  async getPrice(token: TokenQuery): Promise<number | null> {
     const address = await catchNativeAsset(token);
     const response = await fetch(`${DEXSCREENER_BASE_URL}/${address}`);
     const data = (await response.json()) as DexscreenerResponse;

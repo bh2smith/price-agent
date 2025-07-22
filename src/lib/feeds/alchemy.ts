@@ -1,6 +1,6 @@
 import { catchNativeAsset } from "../catch-eth";
-import { PriceQuery } from "../types";
-import { FeedSource } from "./interface";
+import { TokenQuery } from "../types";
+import { PriceFeed } from "./interface";
 
 // Network mapping for Alchemy API
 const ALCHEMY_NETWORK_MAP: Record<number, string> = {
@@ -29,7 +29,7 @@ interface PriceDataResponse {
   data: PriceEntry[];
 }
 
-export class AlchemyFeed implements FeedSource {
+export class AlchemyFeed implements PriceFeed {
   private apiKey: string;
 
   constructor(apiKey: string) {
@@ -39,7 +39,7 @@ export class AlchemyFeed implements FeedSource {
   public get name(): string {
     return "Alchemy";
   }
-  async getPrice(token: PriceQuery): Promise<number | null> {
+  async getPrice(token: TokenQuery): Promise<number | null> {
     const address = await catchNativeAsset(token);
     const addressKey = `${token.chainId}:${token.address.toLowerCase()}`;
 

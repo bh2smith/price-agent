@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { PriceQuerySchema } from "@/src/app/api/schema";
-import { PriceQuery } from "@/src/lib/types";
-import { FeedRevolver } from "@/src/lib/feed";
+import { TokenQuery } from "@/src/lib/types";
+import { FeedRevolver } from "@/src/lib/revolver";
 
 // Simple in-memory cache for price results
 const priceCache = new Map<string, { price: number; timestamp: number }>();
@@ -31,7 +31,7 @@ type ValidationResult<T> =
   | { ok: true; query: T }
   | { ok: false; error: string };
 
-function validateQuery(params: URLSearchParams): ValidationResult<PriceQuery> {
+function validateQuery(params: URLSearchParams): ValidationResult<TokenQuery> {
   const result = PriceQuerySchema.safeParse(
     Object.fromEntries(params.entries()),
   );
@@ -41,7 +41,7 @@ function validateQuery(params: URLSearchParams): ValidationResult<PriceQuery> {
   return { ok: true, query: result.data };
 }
 
-async function getTokenPrice(query: PriceQuery): Promise<number> {
+async function getTokenPrice(query: TokenQuery): Promise<number> {
   const cacheKey = `${query.chainId}:${query.address}`;
   const now = Date.now();
 

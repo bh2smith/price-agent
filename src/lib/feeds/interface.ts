@@ -1,6 +1,6 @@
-import { PriceQuery } from "../types";
+import { TokenQuery } from "../types";
 
-export interface FeedSource {
+export interface PriceFeed {
   name: string;
-  getPrice(token: PriceQuery): Promise<number | null>;
+  getPrice(token: TokenQuery): Promise<number | null>;
 }

@@ -5,15 +5,16 @@ import { AlchemyFeed } from "./feeds/alchemy";
 import { CoingeckoFeed } from "./feeds/coingecko";
 import { DefilamaFeed } from "./feeds/defilama";
 import { DexScreenerFeed } from "./feeds/dex-screener";
-import { FeedSource } from "./feeds/interface";
-import { PriceQuery } from "./types";
+import { PriceFeed } from "./feeds/interface";
+import { IconFeed } from "./icons/interface";
+import { TokenQuery } from "./types";
 
-export class FeedRevolver implements FeedSource {
-  private sources: FeedSource[];
+export class FeedRevolver implements PriceFeed, IconFeed {
+  private sources: PriceFeed[];
   public get name(): string {
     return `FeedRevolver: ${this.sources.length} sources`;
   }
-  constructor(sources: FeedSource[]) {
+  constructor(sources: PriceFeed[]) {
     this.sources = sources;
   }
 
@@ -26,7 +27,7 @@ export class FeedRevolver implements FeedSource {
     ]);
   }
 
-  async getPrice(token: PriceQuery): Promise<number | null> {
+  async getPrice(token: TokenQuery): Promise<number | null> {
     // Create a copy of sources and shuffle them using timestamp as seed
     const timestamp = Date.now();
     const shuffledSources = this.shuffleWithSeed([...this.sources], timestamp);
@@ -51,6 +52,10 @@ export class FeedRevolver implements FeedSource {
     console.log(
       `All sources failed to return a valid price for ${JSON.stringify(token, null, 2)}`,
     );
+    return null;
+  }
+
+  async getIcon(token: TokenQuery): Promise<string | null> {
     return null;
   }
 

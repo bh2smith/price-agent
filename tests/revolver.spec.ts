@@ -1,5 +1,5 @@
 // Unit tests for coingecko.ts
-import { FeedRevolver } from "@/src/lib/feed";
+import { FeedRevolver } from "@/src/lib/revolver";
 import { TORN_MAINNET, XCOMB_GNOSIS, TRUMP_BASE } from "./fixtures";
 import {
   AlchemyFeed,
@@ -9,7 +9,7 @@ import {
   ZerionFeed,
 } from "@/src/lib/feeds";
 import { getAlchemyKey, getZerionKey } from "@/src/app/config";
-import { PriceQuery } from "@/src/lib/types";
+import { TokenQuery } from "@/src/lib/types";
 
 // Rate limits.
 describe("revolver", () => {
