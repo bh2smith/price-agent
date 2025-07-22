@@ -13,6 +13,7 @@
     "fmt": "prettier --write ."
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.850.0",
     "@bitte-ai/agent-sdk": "^0.2.7",
     "near-ca": "^0.10.0",
     "next": "^15.4.2",
