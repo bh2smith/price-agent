@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    nodeMiddleware: true, // TEMPORARY: Only needed until Edge runtime support is added
+  },
+  serverExternalPackages: ["@coinbase/cdp-sdk"],
   async headers() {
     return [
       {
@@ -25,7 +29,7 @@ const nextConfig = {
         destination: "/api/ai-plugin",
       },
     ];
-  },
+  }
 };
 
 export default nextConfig;
