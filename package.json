@@ -13,6 +13,7 @@
     "fmt": "prettier --write ."
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.850.0",
     "@bitte-ai/agent-sdk": "^0.2.7",
     "near-ca": "^0.10.0",
     "next": "^15.4.2",
@@ -31,6 +32,7 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "concurrently": "^9.2.0",
+    "csv-parser": "^3.2.0",
     "eslint": "^9.31.0",
     "eslint-config-next": "^15.4.2",
     "make-agent": "^0.3.5",

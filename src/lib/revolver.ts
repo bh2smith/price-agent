@@ -1,21 +1,24 @@
 // Class for fetching token prices from various sources.
 
-import { getAlchemyKey } from "../app/config";
+import { getAlchemyKey, getZerionKey } from "../app/config";
 import { AlchemyFeed } from "./feeds/alchemy";
 import { CoingeckoFeed } from "./feeds/coingecko";
 import { DefilamaFeed } from "./feeds/defilama";
 import { DexScreenerFeed } from "./feeds/dex-screener";
 import { PriceFeed } from "./feeds/interface";
 import { IconFeed } from "./icons/interface";
+import { ZerionIconFeed } from "./icons/zerion";
 import { TokenQuery } from "./types";
 
 export class FeedRevolver implements PriceFeed, IconFeed {
   private sources: PriceFeed[];
+  private iconFeed: IconFeed;
   public get name(): string {
     return `FeedRevolver: ${this.sources.length} sources`;
   }
   constructor(sources: PriceFeed[]) {
     this.sources = sources;
+    this.iconFeed = new ZerionIconFeed(getZerionKey(), true);
   }
 
   static withAllSources(): FeedRevolver {
@@ -56,7 +59,7 @@ export class FeedRevolver implements PriceFeed, IconFeed {
   }
 
   async getIcon(token: TokenQuery): Promise<string | null> {
-    return null;
+    return this.iconFeed.getIcon(token);
   }
 
   private shuffleWithSeed<T>(array: T[], seed: number): T[] {
