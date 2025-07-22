@@ -1,5 +1,9 @@
 // ... existing code ...
-import { S3Client, PutObjectCommand, HeadObjectCommand } from "@aws-sdk/client-s3";
+import {
+  S3Client,
+  PutObjectCommand,
+  HeadObjectCommand,
+} from "@aws-sdk/client-s3";
 import { getEnvVar } from "@/src/app/config";
 
 class S3Archive {
@@ -36,12 +40,14 @@ class S3Archive {
         new HeadObjectCommand({
           Bucket: this.bucket,
           Key: key,
-        })
+        }),
       );
       return true;
-    } catch (err: any) {
-      if (err.name === "NotFound" || err.$metadata?.httpStatusCode === 404) {
-        return false;
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        if (err.name === "NotFound" || err.message === "Not Found") {
+          return false;
+        }
       }
       throw err; // rethrow if it's a different error
     }
@@ -64,7 +70,7 @@ class S3Archive {
         Bucket: this.bucket,
         Key: this.getKey(chainId, address),
         Body: buffer,
-        ContentType: "image/png"
+        ContentType: "image/png",
       }),
     );
     console.log(`Uploaded icon to ${this.getIconUrl(chainId, address)}`);
