@@ -29,7 +29,7 @@ const nextConfig = {
         destination: "/api/ai-plugin",
       },
     ];
-  }
+  },
 };
 
 export default nextConfig;
