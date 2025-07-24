@@ -8,6 +8,7 @@ const priceCache = new Map<string, { price: number; timestamp: number }>();
 const CACHE_TTL = 60 * 1000; // 1 minute in milliseconds
 
 export async function GET(request: Request) {
+  console.log("Headers", request.headers);
   const url = new URL(request.url);
   const validationResult = validateQuery(url.searchParams);
   if (!validationResult.ok) {

@@ -65,7 +65,7 @@ export async function handlePaymentRequiredResponse(
   paymentRequiredResponse: PaymentRequiredResponse,
 ) {
   // TODO(bh2smith): Handle accepts.length > 1!
-  const { network, payTo, maxAmountRequired, maxTimeoutSeconds } =
+  const { network, payTo, maxAmountRequired, maxTimeoutSeconds, extra, asset } =
     PaymentRequirementsSchema.parse(paymentRequiredResponse.accepts[0]);
 
   const wallet = createWalletClient({
@@ -83,21 +83,48 @@ export async function handlePaymentRequiredResponse(
   ).toString();
   const nonce: Hex = `0x${randomBytes(32).toString("hex")}`;
   // 1. Encode the authorization data (x402 Permits)
-  const encoded = encodeAbiParameters(
-    [
-      { name: "from", type: "address" },
-      { name: "to", type: "address" },
-      { name: "value", type: "uint256" },
-      { name: "validAfter", type: "uint256" },
-      { name: "validBefore", type: "uint256" },
-      { name: "nonce", type: "bytes32" },
-    ],
-    [from, to, BigInt(value), BigInt(validAfter), BigInt(validBefore), nonce],
-  );
+  //   const encoded = encodeAbiParameters(
+  //     [
+  //       { name: "from", type: "address" },
+  //       { name: "to", type: "address" },
+  //       { name: "value", type: "uint256" },
+  //       { name: "validAfter", type: "uint256" },
+  //       { name: "validBefore", type: "uint256" },
+  //       { name: "nonce", type: "bytes32" },
+  //     ],
+  //     [from, to, BigInt(value), BigInt(validAfter), BigInt(validBefore), nonce],
+  //   );
 
   // 2. Hash & sign the encoded payload.
-  const signature = await wallet.signMessage({
-    message: { raw: keccak256(encoded) },
+  //   const signature = await wallet.signMessage({
+  //     message: { raw: keccak256(encoded) },
+  //   });
+  const signature = await wallet.signTypedData({
+    domain: {
+      name: extra?.name, // e.g. "USD Coin"
+      version: extra?.version, // e.g. "2"
+      chainId: wallet.chain.id,
+      verifyingContract: getAddress(asset), // USDC contract address
+    },
+    types: {
+      TransferWithAuthorization: [
+        { name: "from", type: "address" },
+        { name: "to", type: "address" },
+        { name: "value", type: "uint256" },
+        { name: "validAfter", type: "uint256" },
+        { name: "validBefore", type: "uint256" },
+        { name: "nonce", type: "bytes32" },
+      ],
+    },
+    primaryType: "TransferWithAuthorization",
+    message: {
+      from,
+      to,
+      value: BigInt(value),
+      validAfter: BigInt(validAfter),
+      validBefore: BigInt(validBefore),
+      nonce,
+    },
   });
 
   // 3. Construct the final `X-PAYMENT` header payload
@@ -148,8 +175,13 @@ export async function withPayment(
       signer,
       paymentRequiredData,
     );
-    console.log("Response", await response.json());
+    const paymentResponse = response.headers.get("x-payment-response");
+    if (paymentResponse) {
+      console.log(
+        "Response",
+        Buffer.from(paymentResponse, "base64").toString("utf-8"),
+      );
+    }
   }
-  console.log("No payment required");
   return response;
 }
