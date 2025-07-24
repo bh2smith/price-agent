@@ -1,9 +1,6 @@
 import {
   Chain,
-  Hex,
-  encodeAbiParameters,
   getAddress,
-  keccak256,
   PrivateKeyAccount,
   HttpTransport,
   WalletClient,
