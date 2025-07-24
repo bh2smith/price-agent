@@ -51,13 +51,13 @@ export interface PaymentRequiredResponse {
 }
 
 // // Currently supported x402 networks. https://docs.cdp.coinbase.com/get-started/supported-networks
-// const chainMap: Record<Network, Chain> = {
-//   ["base"]: base,
-//   ["base-sepolia"]: baseSepolia,
-//   ["avalanche"]: avalanche,
-//   ["avalanche-fuji"]: avalancheFuji,
-//   ["iotex"]: iotex,
-// };
+const chainMap: Record<Network, Chain> = {
+  ["base"]: base,
+  ["base-sepolia"]: baseSepolia,
+  ["avalanche"]: avalanche,
+  ["avalanche-fuji"]: avalancheFuji,
+  ["iotex"]: iotex,
+};
 
 export async function handlePaymentRequiredResponse(
   url: string,
@@ -67,6 +67,12 @@ export async function handlePaymentRequiredResponse(
   // TODO(bh2smith): Handle accepts.length > 1!
   const { network, payTo, maxAmountRequired, maxTimeoutSeconds } =
     PaymentRequirementsSchema.parse(paymentRequiredResponse.accepts[0]);
+
+  const wallet = createWalletClient({
+    account: signer,
+    chain: chainMap[network],
+    transport: http(),
+  }).extend(publicActions);
 
   const from = signer.address;
   const to = getAddress(payTo);
@@ -90,7 +96,7 @@ export async function handlePaymentRequiredResponse(
   );
 
   // 2. Hash & sign the encoded payload.
-  const signature = await signer.signMessage({
+  const signature = await wallet.signMessage({
     message: { raw: keccak256(encoded) },
   });
 
@@ -142,6 +148,7 @@ export async function withPayment(
       signer,
       paymentRequiredData,
     );
+    console.log("Response", await response.json());
   }
   console.log("No payment required");
   return response;

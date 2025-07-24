@@ -17,7 +17,8 @@ export async function externalPriceFeed(query: {
   chainId: number;
   address: string;
 }): Promise<number | null> {
-  const priceAgent = "https://price-agent.vercel.app/api/tools/prices";
+  const priceAgent = "http://localhost:3000/api/tools/prices";
+  // const priceAgent = "https://price-agent.vercel.app/api/tools/prices";
   const url = `${priceAgent}?chainId=${query.chainId}&address=${query.address}`;
   const signer = getSigner(); // however you get your signer
 
@@ -39,9 +40,10 @@ export async function externalPriceFeed(query: {
   }
 }
 
-
-
-externalPriceFeed({ chainId: 1, address: "0xae7ab96520de3a18e5e111b5eaab095312d7fe84" }).then(console.log);
+externalPriceFeed({
+  chainId: 1,
+  address: "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
+}).then(console.log);
 
 // const url = "http://localhost:3000/api/tools/prices?address=0xae7ab96520de3a18e5e111b5eaab095312d7fe84&chainId=1";
 // const sampleResponse = {
