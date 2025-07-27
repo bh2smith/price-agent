@@ -3,7 +3,7 @@
 import { Address } from "viem";
 import { catchNativeAsset } from "../catch-eth";
 import { TokenQuery } from "../types";
-import { PriceFeed } from "./interface";
+import { PriceFeed, PriceResponse } from "./interface";
 
 const DEXSCREENER_BASE_URL = "https://api.dexscreener.com/latest/dex/tokens";
 
@@ -73,11 +73,15 @@ export class DexScreenerFeed implements PriceFeed {
   public get name(): string {
     return "DexScreener";
   }
-  async getPrice(token: TokenQuery): Promise<number | null> {
+  async getPrice(token: TokenQuery): Promise<PriceResponse | null> {
     const address = await catchNativeAsset(token);
     const response = await fetch(`${DEXSCREENER_BASE_URL}/${address}`);
     const data = (await response.json()) as DexscreenerResponse;
-    return evaluatePrice(data.pairs, token.address);
+    const price = evaluatePrice(data.pairs, token.address);
+    if (price) {
+      return { price, source: this.name };
+    }
+    return null;
   }
 }
 
@@ -86,7 +90,8 @@ export function evaluatePrice(
   address: Address,
 ): number | null {
   const filteredPairs = pairs.filter(
-    (p) => p.liquidity && p.liquidity.usd > 10000 && parseFloat(p.priceUsd) > 0,
+    (p) =>
+      p.liquidity && p.liquidity.usd > 100000 && parseFloat(p.priceUsd) > 0,
   );
   if (filteredPairs.length === 0) {
     return null;

@@ -5,6 +5,7 @@ import {
   HeadObjectCommand,
 } from "@aws-sdk/client-s3";
 import { getEnvVar } from "@/src/app/config";
+import { TokenQuery } from "../types";
 
 class S3Archive {
   private s3: S3Client;
@@ -25,16 +26,16 @@ class S3Archive {
     this.publicUrl = getEnvVar("S3_PUBLIC_URL");
   }
 
-  private getKey(chainId: number, address: string): string {
+  private getKey({ chainId, address }: TokenQuery): string {
     return `tokens/${chainId}/${address}.png`;
   }
 
-  getIconUrl(chainId: number, address: string): string {
-    return `${this.publicUrl}/${this.getKey(chainId, address)}`;
+  getIconUrl(args: TokenQuery): string {
+    return `${this.publicUrl}/${this.getKey(args)}`;
   }
 
-  async iconExists(chainId: number, address: string): Promise<boolean> {
-    const key = this.getKey(chainId, address);
+  async iconExists(args: TokenQuery): Promise<boolean> {
+    const key = this.getKey(args);
     try {
       await this.s3.send(
         new HeadObjectCommand({
@@ -54,26 +55,24 @@ class S3Archive {
   }
 
   async uploadIcon({
-    chainId,
-    address,
+    token,
     buffer,
   }: {
-    chainId: number;
-    address: string;
+    token: TokenQuery;
     buffer: Buffer;
   }): Promise<void> {
-    if (await this.iconExists(chainId, address)) {
+    if (await this.iconExists(token)) {
       return;
     }
     await this.s3.send(
       new PutObjectCommand({
         Bucket: this.bucket,
-        Key: this.getKey(chainId, address),
+        Key: this.getKey(token),
         Body: buffer,
         ContentType: "image/png",
       }),
     );
-    console.log(`Uploaded icon to ${this.getIconUrl(chainId, address)}`);
+    console.log(`Uploaded icon to ${this.getIconUrl(token)}`);
   }
 }
 

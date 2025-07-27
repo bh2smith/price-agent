@@ -1,14 +1,15 @@
 // Class for fetching token prices from various sources.
-
 import { getAlchemyKey, getZerionKey } from "../app/config";
-import { AlchemyFeed } from "./feeds/alchemy";
-import { CoingeckoFeed } from "./feeds/coingecko";
-import { DefilamaFeed } from "./feeds/defilama";
-import { DexScreenerFeed } from "./feeds/dex-screener";
-import { PriceFeed } from "./feeds/interface";
-import { IconFeed } from "./icons/interface";
-import { ZerionIconFeed } from "./icons/zerion";
+import { IconFeed, ZerionIconFeed } from "./icons";
 import { TokenQuery } from "./types";
+import {
+  AlchemyFeed,
+  CoingeckoFeed,
+  DefilamaFeed,
+  DexScreenerFeed,
+  ZerionFeed,
+  PriceFeed,
+} from "./feeds";
 
 export class FeedRevolver implements PriceFeed, IconFeed {
   private sources: PriceFeed[];
@@ -27,10 +28,13 @@ export class FeedRevolver implements PriceFeed, IconFeed {
       new DefilamaFeed(),
       new DexScreenerFeed(),
       new AlchemyFeed(getAlchemyKey()),
+      new ZerionFeed(getZerionKey()),
     ]);
   }
 
-  async getPrice(token: TokenQuery): Promise<number | null> {
+  async getPrice(
+    token: TokenQuery,
+  ): Promise<{ price: number; source: string } | null> {
     // Create a copy of sources and shuffle them using timestamp as seed
     const timestamp = Date.now();
     const shuffledSources = this.shuffleWithSeed([...this.sources], timestamp);
@@ -41,10 +45,10 @@ export class FeedRevolver implements PriceFeed, IconFeed {
         `Trying ${source.name} to fetch price for ${token.chainId}:${token.address}`,
       );
       try {
-        const price = await source.getPrice(token);
-        if (price !== null) {
-          console.log(`${source.name} found price ${price}`);
-          return price;
+        const resp = await source.getPrice(token);
+        if (resp) {
+          console.log(`${source.name} found price ${resp.price}`);
+          return resp;
         }
         console.log(`${source.name} returned null price`);
       } catch (error) {

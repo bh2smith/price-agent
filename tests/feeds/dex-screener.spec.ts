@@ -134,8 +134,8 @@ describe("dexscreener", () => {
 
   it.only("torn price", async () => {
     const feed = new DexScreenerFeed();
-    const price = await feed.getPrice(TORN_MAINNET);
-    console.log(`torn price`, price);
-    expect(price).toBeGreaterThan(0);
+    const resp = await feed.getPrice(TORN_MAINNET);
+    console.log(`torn price`, resp);
+    expect(resp!.price).toBeGreaterThan(0);
   });
 });

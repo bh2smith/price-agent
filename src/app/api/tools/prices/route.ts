@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { PriceQuerySchema } from "@/src/app/api/schema";
 import { TokenQuery } from "@/src/lib/types";
 import { FeedRevolver } from "@/src/lib/revolver";
+import { PriceResponse } from "@/src/lib/feeds/interface";
 
 // Simple in-memory cache for price results
 const priceCache = new Map<string, { price: number; timestamp: number }>();
@@ -19,9 +20,9 @@ export async function GET(request: Request) {
   console.log("prices/", validationResult.query);
   try {
     const price = await getTokenPrice(validationResult.query);
-    return NextResponse.json({ price }, { status: 200 });
+    return NextResponse.json(price, { status: 200 });
   } catch (error) {
-    const publicMessage = "Error validating payload";
+    const publicMessage = "Internal Server Error";
     console.error(publicMessage, error);
     return NextResponse.json({ error: publicMessage }, { status: 500 });
   }
@@ -41,7 +42,7 @@ function validateQuery(params: URLSearchParams): ValidationResult<TokenQuery> {
   return { ok: true, query: result.data };
 }
 
-async function getTokenPrice(query: TokenQuery): Promise<number> {
+async function getTokenPrice(query: TokenQuery): Promise<PriceResponse> {
   const cacheKey = `${query.chainId}:${query.address}`;
   const now = Date.now();
 
@@ -49,20 +50,19 @@ async function getTokenPrice(query: TokenQuery): Promise<number> {
   const cached = priceCache.get(cacheKey);
   if (cached && now - cached.timestamp < CACHE_TTL) {
     console.log(`Cache hit for ${cacheKey}: ${cached.price}`);
-    return cached.price;
+    return { price: cached.price, source: "cache" };
   }
 
   // Fetch fresh price
   const revolver = FeedRevolver.withAllSources();
-  const price = await revolver.getPrice(query);
-  console.log(`Got price: ${price} for ${query.chainId}:${query.address}`);
-  if (!price) {
+  const res = await revolver.getPrice(query);
+  if (!res) {
     throw new Error(`No price found for ${query.chainId}:${query.address}`);
   }
 
   // Cache the result
-  priceCache.set(cacheKey, { price, timestamp: now });
-  console.log(`Cached price for ${cacheKey}: ${price}`);
+  priceCache.set(cacheKey, { price: res.price, timestamp: now });
+  console.log(`Cached price for ${cacheKey}: ${res.price}`);
 
-  return price;
+  return res;
 }

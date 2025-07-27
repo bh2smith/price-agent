@@ -30,6 +30,11 @@ export const TRUMP_BASE = {
   chainId: 8453,
 } as TokenQuery;
 
+export const WETH_BASE = {
+  address: "0x4200000000000000000000000000000000000006",
+  chainId: 8453,
+} as TokenQuery;
+
 export const SAMPLE_TOKENS: Record<string, Address[]> = {
   base: [
     "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913", // USDC
