@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: false,
+  experimental: {
+    nodeMiddleware: true, // TEMPORARY: Only needed until Edge runtime support is added
+  },
+  serverExternalPackages: ["@coinbase/cdp-sdk"],
   async headers() {
     return [
       {
