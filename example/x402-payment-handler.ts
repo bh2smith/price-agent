@@ -1,3 +1,10 @@
+/**
+ * This file is just a manual implementation of some of the tools provided in x402.
+ * At some point, we may want to go beyond the capabilities of thier dependency to handle things like:
+ * 1. Validate user request input before hitting paywall
+ * 2. Issue User Refunds on Server Errors.
+ * 3. Dynamically compute fees based on (e.g. size of) request input.
+ */
 import {
   Chain,
   getAddress,

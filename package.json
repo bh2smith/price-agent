@@ -21,7 +21,6 @@
     "price-agent": ".",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "redoc": "^2.5.0",
     "swagger-ui-react": "^5.27.0",
     "vercel-url": "^0.2.8",
     "viem": "^2.33.0",
