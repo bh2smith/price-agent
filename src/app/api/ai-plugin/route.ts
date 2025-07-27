@@ -39,7 +39,18 @@ export async function GET() {
               content: {
                 "application/json": {
                   schema: {
-                    type: "number",
+                    type: "object",
+                    properties: {
+                      price: {
+                        type: "number",
+                        description: "The price of the token",
+                      },
+                      source: {
+                        type: "string",
+                        description: "The source of the price data",
+                      },
+                    },
+                    required: ["price", "source"],
                   },
                 },
               },
