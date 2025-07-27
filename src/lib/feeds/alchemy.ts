@@ -1,6 +1,6 @@
 import { catchNativeAsset } from "../catch-eth";
 import { TokenQuery } from "../types";
-import { PriceFeed } from "./interface";
+import { PriceFeed, PriceResponse } from "./interface";
 
 // Network mapping for Alchemy API
 const ALCHEMY_NETWORK_MAP: Record<number, string> = {
@@ -22,7 +22,7 @@ interface PriceEntry {
   network: string;
   address: string;
   prices: Price[];
-  error: string;
+  error?: string;
 }
 
 interface PriceDataResponse {
@@ -39,7 +39,7 @@ export class AlchemyFeed implements PriceFeed {
   public get name(): string {
     return "Alchemy";
   }
-  async getPrice(token: TokenQuery): Promise<number | null> {
+  async getPrice(token: TokenQuery): Promise<PriceResponse | null> {
     const address = await catchNativeAsset(token);
     const addressKey = `${token.chainId}:${token.address.toLowerCase()}`;
 
@@ -75,6 +75,7 @@ export class AlchemyFeed implements PriceFeed {
       const data = await response.json();
       if (!isPriceDataResponse(data)) {
         console.warn(`Invalid response format for ${addressKey}`);
+        console.log(JSON.stringify(data));
         return null;
       }
 
@@ -97,7 +98,7 @@ export class AlchemyFeed implements PriceFeed {
         return null;
       }
 
-      return parseFloat(usdPrice.value);
+      return { price: parseFloat(usdPrice.value), source: this.name };
     } catch (error) {
       console.error(
         `Error fetching price from Alchemy for ${addressKey}:`,
@@ -109,7 +110,7 @@ export class AlchemyFeed implements PriceFeed {
 }
 
 // TypeGuard functions
-function isPrice(obj: unknown): obj is Price {
+export function isPrice(obj: unknown): obj is Price {
   return (
     typeof obj === "object" &&
     obj !== null &&
@@ -119,19 +120,18 @@ function isPrice(obj: unknown): obj is Price {
   );
 }
 
-function isPriceEntry(obj: unknown): obj is PriceEntry {
+export function isPriceEntry(obj: unknown): obj is PriceEntry {
   return (
     typeof obj === "object" &&
     obj !== null &&
     typeof (obj as PriceEntry).network === "string" &&
     typeof (obj as PriceEntry).address === "string" &&
     Array.isArray((obj as PriceEntry).prices) &&
-    (obj as PriceEntry).prices.every(isPrice) &&
-    typeof (obj as PriceEntry).error === "string"
+    (obj as PriceEntry).prices.every(isPrice)
   );
 }
 
-function isPriceDataResponse(obj: unknown): obj is PriceDataResponse {
+export function isPriceDataResponse(obj: unknown): obj is PriceDataResponse {
   return (
     typeof obj === "object" &&
     obj !== null &&

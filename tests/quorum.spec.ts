@@ -1,13 +1,13 @@
 // Unit tests for coingecko.ts
-import { FeedRevolver } from "@/src/lib/revolver";
-import { TORN_MAINNET, XCOMB_GNOSIS, TRUMP_BASE } from "./fixtures";
+import { QuorumFeed } from "@/src/lib/quorum";
+import { TORN_MAINNET, XCOMB_GNOSIS, WETH_BASE } from "./fixtures";
 
 // Rate limits.
-describe.skip("revolver", () => {
+describe.skip("quorum", () => {
   it("should return token prices on a few networks", async () => {
-    const revolver = FeedRevolver.withAllSources();
+    const revolver = QuorumFeed.withAllSources();
     const prices = await Promise.all(
-      [TORN_MAINNET, XCOMB_GNOSIS, TRUMP_BASE].map(async (token) => {
+      [TORN_MAINNET, XCOMB_GNOSIS, WETH_BASE].map(async (token) => {
         const resp = await revolver.getPrice(token);
         if (resp) {
           expect(resp.price).toBeGreaterThan(0);

@@ -1,7 +1,7 @@
 import { ZerionAPI } from "zerion-sdk";
 import { catchNativeAsset } from "../catch-eth";
 import { TokenQuery } from "../types";
-import { PriceFeed } from "./interface";
+import { PriceFeed, PriceResponse } from "./interface";
 
 export class ZerionFeed implements PriceFeed {
   public get name(): string {
@@ -14,7 +14,7 @@ export class ZerionFeed implements PriceFeed {
     this.apiKey = apiKey;
   }
 
-  async getPrice(token: TokenQuery): Promise<number | null> {
+  async getPrice(token: TokenQuery): Promise<PriceResponse | null> {
     const address = await catchNativeAsset(token);
     const zerion = new ZerionAPI(this.apiKey);
 
@@ -23,7 +23,11 @@ export class ZerionFeed implements PriceFeed {
         ...token,
         address,
       });
-      return tokenData.attributes.market_data.price;
+      const price = tokenData.attributes.market_data.price;
+      if (price) {
+        return { price, source: this.name };
+      }
+      return null;
     } catch (error) {
       console.warn(
         `Token Meta not found for ${token.chainId}:${address}`,

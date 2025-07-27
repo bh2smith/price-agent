@@ -2,7 +2,7 @@
 
 import { catchNativeAsset } from "../catch-eth";
 import { TokenQuery } from "../types";
-import { PriceFeed } from "./interface";
+import { PriceFeed, PriceResponse } from "./interface";
 
 const DEFILAMA_BASE_URL = "https://coins.llama.fi";
 
@@ -21,7 +21,7 @@ export class DefilamaFeed implements PriceFeed {
   public get name(): string {
     return "Defilama";
   }
-  async getPrice(token: TokenQuery): Promise<number | null> {
+  async getPrice(token: TokenQuery): Promise<PriceResponse | null> {
     const address = await catchNativeAsset(token);
 
     const chain = chainMap[token.chainId];
@@ -45,6 +45,10 @@ export class DefilamaFeed implements PriceFeed {
     }
 
     const data = await response.json();
-    return data.coins?.[`${chain}:${address}`]?.price || null;
+    const price = data.coins?.[`${chain}:${address}`]?.price || null;
+    if (price) {
+      return { price, source: this.name };
+    }
+    return null;
   }
 }

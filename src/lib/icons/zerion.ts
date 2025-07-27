@@ -21,15 +21,10 @@ export class ZerionIconFeed implements IconFeed {
   }
   async getIcon(token: TokenQuery): Promise<string | null> {
     if (this.archive) {
-      const exists = await this.archive.iconExists(
-        token.chainId,
-        token.address,
-      );
+      const exists = await this.archive.iconExists(token);
       if (exists) {
-        console.log(
-          `Icon found in archive for ${token.chainId}:${token.address}`,
-        );
-        return this.archive.getIconUrl(token.chainId, token.address);
+        console.log(`Icon found in archive: ${this.archive.getIconUrl(token)}`);
+        return this.archive.getIconUrl(token);
       }
     }
     const { attributes } = await this.zerion.getToken(token);
@@ -44,8 +39,7 @@ export class ZerionIconFeed implements IconFeed {
       const response = await fetch(iconUrl);
       const buffer = await response.blob();
       await this.archive.uploadIcon({
-        chainId: token.chainId,
-        address: token.address,
+        token,
         buffer: Buffer.from(await buffer.arrayBuffer()),
       });
     } catch (error) {
