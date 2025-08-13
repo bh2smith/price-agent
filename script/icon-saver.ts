@@ -4,12 +4,17 @@ import { getZerionKey } from "@/src/app/config";
 import { ZerionIconFeed } from "@/src/lib/icons/zerion";
 import fs from "node:fs";
 import { getAddress } from "viem";
+import { S3Archive } from "@/src/lib/icons";
+import { DexScreenerIcons } from "@/src/lib/icons/dex-screener";
 
 const INPUT_CSV = "input.csv";
 const OUTPUT_DIR = "downloaded-icons";
 
 async function main() {
-  const zerion = new ZerionIconFeed(getZerionKey(), true);
+  const archive = new S3Archive([
+    new DexScreenerIcons(),
+    new ZerionIconFeed(getZerionKey()),
+  ]);
 
   if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR);
 
@@ -26,7 +31,7 @@ async function main() {
   // Process each row sequentially
   for (const { chainId, address } of rows) {
     console.log(`Fetching icon for ${chainId}:${address}`);
-    await zerion.getIcon({
+    await archive.getIcon({
       chainId: Number(chainId),
       address: getAddress(address),
     });

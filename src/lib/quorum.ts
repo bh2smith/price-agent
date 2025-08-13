@@ -19,7 +19,7 @@ export class QuorumFeed implements PriceFeed, IconFeed {
   }
   constructor(sources: PriceFeed[]) {
     this.sources = sources;
-    this.iconFeed = new ZerionIconFeed(getZerionKey(), true);
+    this.iconFeed = new ZerionIconFeed(getZerionKey());
   }
 
   static withAllSources(): QuorumFeed {
