@@ -1,12 +1,5 @@
-import { getZerionKey } from "@/src/app/config";
 import { DexScreenerIcons } from "@/src/lib/icons/dex-screener";
-import {
-  TORN_MAINNET,
-  TRUMP_BASE,
-  USDC_BASE,
-  USDC_GNOSIS,
-  USDC_POLYGON,
-} from "../fixtures";
+import { TRUMP_BASE } from "../fixtures";
 import { TokenQuery } from "@/src/lib/types";
 // Fetching icon for 8453:0xb96450dcb16e4a30b999cb5f4087bae9c0ffac4e
 

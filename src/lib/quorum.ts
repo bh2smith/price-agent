@@ -11,7 +11,7 @@ import { IconFeed } from "./icons/interface";
 import { ZerionIconFeed } from "./icons/zerion";
 import { TokenQuery } from "./types";
 
-export class QuorumFeed implements PriceFeed, IconFeed {
+export class QuorumFeed implements PriceFeed {
   private sources: PriceFeed[];
   private iconFeed: IconFeed;
   public get name(): string {

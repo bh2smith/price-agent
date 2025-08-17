@@ -9,9 +9,11 @@ import { TokenQuery } from "../types";
 import { IconFeed } from "./interface";
 import { DexScreenerIcons } from "./dex-screener";
 import { ZerionIconFeed } from "./zerion";
+import { SmolDappIcons } from "./smoldapp";
 
 class S3Archive implements IconFeed {
   private s3: S3Client;
+  canArchive = true;
   private bucket: string;
   private publicUrl: string;
   private sources: IconFeed[];
@@ -34,45 +36,54 @@ class S3Archive implements IconFeed {
 
   static withAllSources(): S3Archive {
     return new S3Archive([
+      new SmolDappIcons(),
       new DexScreenerIcons(),
       new ZerionIconFeed(getZerionKey()),
     ]);
   }
 
   async getIcon(token: TokenQuery): Promise<string | null> {
+    console.log(`Fetching icon ${token.chainId}:${token.address}`);
     if (await this.iconExists(token)) {
+      console.log("exists");
       return this.getIconUrl(token);
     }
-    const iconUrl = await this.fetchFromAnySource(token);
-    if (!iconUrl) {
+    const iconData = await this.fetchFromAnySource(token);
+    if (!iconData) {
       // Couldn't find from any source.
       return null;
     }
-    try {
-      const response = await fetch(iconUrl);
-      const buffer = await response.blob();
-      await this.uploadIcon({
-        token,
-        buffer: Buffer.from(await buffer.arrayBuffer()),
-      });
-    } catch (error) {
-      console.error(error);
+    if (iconData.canArchive) {
+      try {
+        const response = await fetch(iconData.icon);
+        const buffer = await response.blob();
+        await this.uploadIcon({
+          token,
+          buffer: Buffer.from(await buffer.arrayBuffer()),
+        });
+      } catch (error) {
+        console.error(error);
+      }
     }
-    return iconUrl;
+    return iconData.icon;
   }
 
   // Attempts to get icon from all of this.source. Returns the first non-null item.
-  async fetchFromAnySource(token: TokenQuery): Promise<string | null> {
+  async fetchFromAnySource(
+    token: TokenQuery,
+  ): Promise<{ icon: string; canArchive: boolean } | null> {
     for (const source of this.sources) {
       try {
         const icon = await source.getIcon(token);
         if (icon) {
-          return icon;
+          console.log("Found with", source.name);
+          return { icon, canArchive: source.canArchive };
         }
       } catch (err) {
         console.error(`Error fetching from ${source.name}:`, err);
       }
     }
+    console.log("Not Found");
     return null;
   }
 

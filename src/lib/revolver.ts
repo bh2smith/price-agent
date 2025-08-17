@@ -11,7 +11,7 @@ import {
   PriceFeed,
 } from "./feeds";
 
-export class FeedRevolver implements PriceFeed, IconFeed {
+export class FeedRevolver implements PriceFeed {
   private sources: PriceFeed[];
   private iconFeed: IconFeed;
   public get name(): string {

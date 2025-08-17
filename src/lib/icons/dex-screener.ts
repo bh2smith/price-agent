@@ -5,11 +5,15 @@ import { IconFeed } from "./interface";
 
 export const CHAIN_MAP: Record<number, string> = {
   1: `ethereum`,
+  10: `optimism`,
+  56: `bsc`,
   100: `gnosis`, // maybe xdai
   137: `polygon`,
   8453: `base`,
   42161: `arbitrum`,
+  42220: `celo`,
   43114: `avalanche`,
+  81457: `blast`,
   11155111: `sepolia`,
 };
 
@@ -17,6 +21,7 @@ export const CHAIN_MAP: Record<number, string> = {
 // We should attempt to fetch the token and scrape the icon from the return data.
 export class DexScreenerIcons implements IconFeed {
   name = "DexScreener";
+  canArchive = true;
   bucketUrl = "https://dd.dexscreener.com/ds-data/tokens";
   async getIcon({ address, chainId }: TokenQuery): Promise<string | null> {
     if (isNativeAsset(address)) {
