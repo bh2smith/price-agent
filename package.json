@@ -13,8 +13,8 @@
     "fmt": "prettier --write ."
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.872.0",
-    "@bitte-ai/agent-sdk": "^0.2.7",
+    "@aws-sdk/client-s3": "^3.873.0",
+    "@bitte-ai/agent-sdk": "^0.3.0",
     "near-ca": "^0.11.0",
     "next": "^15.5.0",
     "price-agent": ".",
@@ -22,18 +22,18 @@
     "react-dom": "^19.1.1",
     "redoc": "^2.5.0",
     "vercel-url": "^0.2.8",
-    "viem": "^2.34.0",
+    "viem": "^2.35.1",
     "zerion-sdk": "^0.1.6",
-    "zod": "^4.0.17"
+    "zod": "^4.1.1"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "@types/node": "^24.3.0",
-    "@types/react": "^19.1.10",
+    "@types/react": "^19.1.11",
     "@types/react-dom": "^19.1.7",
-    "concurrently": "^9.2.0",
+    "concurrently": "^9.2.1",
     "csv-parser": "^3.2.0",
-    "eslint": "^9.33.0",
+    "eslint": "^9.34.0",
     "eslint-config-next": "^15.5.0",
     "make-agent": "^0.3.5",
     "prettier": "^3.6.2",
