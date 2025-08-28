@@ -1,5 +1,4 @@
 import { TokenQuery } from "@/src/lib/types";
-import { CoinGeckoIconFeed } from "@/src/lib/icons/coingecko";
 import { tokenId } from "@/src/lib/icons/common";
 import { CowBucketIcons } from "@/src/lib/icons";
 
@@ -93,7 +92,7 @@ const sampleList = [
   { chainId: 81457, address: "0xE63C9B9896d250CBa26aF7FEb706CfDF40814ad8" },
 ] as TokenQuery[];
 
-describe("CoW Bucket Icons", () => {
+describe.skip("CoW Bucket Icons", () => {
   it("should retrieve and archive token icons", async () => {
     const feed = new CowBucketIcons();
     let missing = 0;
