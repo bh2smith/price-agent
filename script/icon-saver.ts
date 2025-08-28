@@ -4,12 +4,19 @@ import { getZerionKey } from "@/src/app/config";
 import { ZerionIconFeed } from "@/src/lib/icons/zerion";
 import fs from "node:fs";
 import { getAddress } from "viem";
+import { S3Archive } from "@/src/lib/icons";
+import { DexScreenerIcons } from "@/src/lib/icons/dex-screener";
+import { SmolDappIcons } from "@/src/lib/icons/smoldapp";
 
 const INPUT_CSV = "input.csv";
 const OUTPUT_DIR = "downloaded-icons";
 
 async function main() {
-  const zerion = new ZerionIconFeed(getZerionKey(), true);
+  const archive = new S3Archive([
+    new SmolDappIcons(),
+    new DexScreenerIcons(),
+    new ZerionIconFeed(getZerionKey()),
+  ]);
 
   if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR);
 
@@ -25,13 +32,12 @@ async function main() {
 
   // Process each row sequentially
   for (const { chainId, address } of rows) {
-    console.log(`Fetching icon for ${chainId}:${address}`);
-    await zerion.getIcon({
+    await archive.getIcon({
       chainId: Number(chainId),
       address: getAddress(address),
     });
     // sleep for 0.5 seconds
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 100));
   }
   console.log("Done processing CSV.");
 }
