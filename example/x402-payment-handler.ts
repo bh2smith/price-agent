@@ -70,12 +70,17 @@ const x402TypedData = {
 };
 
 // // Currently supported x402 networks. https://docs.cdp.coinbase.com/get-started/supported-networks
-const chainMap: Record<Network, Chain> = {
+const chainMap: Record<Network, Chain | undefined> = {
   ["base"]: base,
   ["base-sepolia"]: baseSepolia,
   ["avalanche"]: avalanche,
   ["avalanche-fuji"]: avalancheFuji,
   ["iotex"]: iotex,
+  // Not currently supported.
+  "solana-devnet": undefined,
+  solana: undefined,
+  sei: undefined,
+  "sei-testnet": undefined,
 };
 
 export function encodeTransferWithAuthorizationFor(
@@ -86,6 +91,9 @@ export function encodeTransferWithAuthorizationFor(
   const { network, payTo, maxAmountRequired, maxTimeoutSeconds, extra, asset } =
     PaymentRequirementsSchema.parse(paymentRequiredResponse.accepts[0]);
   const chain = chainMap[network];
+  if (!chain) {
+    throw new Error(`Unsupported Network ${network}`);
+  }
 
   // Encode TypedData for TransferWithAuthorization (i.e. x402-Permit)
   const typedData = {
