@@ -70,17 +70,12 @@ const x402TypedData = {
 };
 
 // // Currently supported x402 networks. https://docs.cdp.coinbase.com/get-started/supported-networks
-const chainMap: Record<Network, Chain | undefined> = {
+const chainMap: Record<Network, Chain> = {
   ["base"]: base,
   ["base-sepolia"]: baseSepolia,
   ["avalanche"]: avalanche,
   ["avalanche-fuji"]: avalancheFuji,
-  ["iotex"]: iotex,
-  // Not currently supported.
-  "solana-devnet": undefined,
-  solana: undefined,
-  sei: undefined,
-  "sei-testnet": undefined,
+  ["iotex"]: iotex
 };
 
 export function encodeTransferWithAuthorizationFor(
