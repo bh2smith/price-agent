@@ -1,6 +1,6 @@
 // Class for fetching token prices from various sources.
 import { getAlchemyKey, getZerionKey } from "../app/config";
-import { IconFeed, ZerionIconFeed } from "./icons";
+import { IconFeed, S3Archive } from "./icons";
 import { TokenQuery } from "./types";
 import {
   AlchemyFeed,
@@ -11,7 +11,7 @@ import {
   PriceFeed,
 } from "./feeds";
 
-export class FeedRevolver implements PriceFeed, IconFeed {
+export class FeedRevolver implements PriceFeed {
   private sources: PriceFeed[];
   private iconFeed: IconFeed;
   public get name(): string {
@@ -19,7 +19,7 @@ export class FeedRevolver implements PriceFeed, IconFeed {
   }
   constructor(sources: PriceFeed[]) {
     this.sources = sources;
-    this.iconFeed = new ZerionIconFeed(getZerionKey(), true);
+    this.iconFeed = S3Archive.withAllSources();
   }
 
   static withAllSources(): FeedRevolver {
