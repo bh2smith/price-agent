@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: false, // Disables swagger warning: https://github.com/swagger-api/swagger-ui/issues/10212
+  serverExternalPackages: ["@coinbase/cdp-sdk"],
   async headers() {
     return [
       {

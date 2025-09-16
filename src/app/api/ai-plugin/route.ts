@@ -32,7 +32,14 @@ export async function GET() {
           summary: "Get token price",
           description:
             "Returns the price for a given token address and chain ID.",
-          parameters: [{ ...addressParam }, { ...chainIdParam }],
+          parameters: [
+            { $ref: "#/components/parameters/XPaymentHeader" },
+            {
+              ...addressParam,
+              example: "0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1",
+            },
+            { ...chainIdParam },
+          ],
           responses: {
             "200": {
               description: "Price response",
@@ -55,10 +62,94 @@ export async function GET() {
                 },
               },
             },
-            "400": {
-              description: "Missing parameters",
+            "400": { description: "Missing parameters" },
+            "402": { $ref: "#/components/responses/X402PaymentRequired" },
+          },
+        },
+      },
+    },
+    components: {
+      parameters: {
+        XPaymentHeader: {
+          name: "x-payment",
+          in: "header",
+          // required: true,
+          schema: {
+            type: "string",
+          },
+          description: "Base64-encoded x402 payment authorization payload",
+        },
+      },
+      responses: {
+        X402PaymentRequired: {
+          description: "Payment required via x402",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/X402PaymentRequired",
+              },
             },
           },
+        },
+      },
+      schemas: {
+        X402PaymentRequired: {
+          type: "object",
+          properties: {
+            x402Version: { type: "number", example: 1 },
+            error: { type: "string", example: "X-PAYMENT header is required" },
+            accepts: {
+              type: "array",
+              items: { $ref: "#/components/schemas/X402Accept" },
+            },
+          },
+          required: ["x402Version", "error", "accepts"],
+        },
+        X402Accept: {
+          type: "object",
+          properties: {
+            scheme: { type: "string", enum: ["exact"] },
+            network: {
+              type: "string",
+              enum: [
+                "base",
+                "base-sepolia",
+                "avalanche",
+                "avalanche-fuji",
+                "iotex",
+              ],
+            },
+            maxAmountRequired: {
+              type: "string",
+              description: "Wei Amount of required payment (not token units)",
+            },
+            resource: { type: "string", format: "uri" },
+            description: { type: "string" },
+            mimeType: { type: "string" },
+            payTo: { type: "string" },
+            maxTimeoutSeconds: { type: "integer" },
+            asset: { type: "string" },
+            extra: {
+              type: "object",
+              properties: {
+                name: { type: "string" },
+                version: { type: "string" },
+              },
+              required: ["name", "version"],
+            },
+          },
+          required: [
+            "scheme",
+            "network",
+            "maxAmountRequired",
+            "resource",
+            "description",
+            "mimeType",
+            "payTo",
+            "maxTimeoutSeconds",
+            "asset",
+            "extra",
+          ],
         },
       },
     },
