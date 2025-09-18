@@ -13,9 +13,9 @@
     "fmt": "prettier --write ."
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.888.0",
+    "@aws-sdk/client-s3": "^3.891.0",
     "@bitte-ai/agent-sdk": "^0.4.0",
-    "@coinbase/x402": "^0.6.3",
+    "@coinbase/x402": "^0.6.4",
     "@coingecko/coingecko-typescript": "^1.13.0",
     "near-ca": "^0.11.2",
     "next": "canary",
@@ -24,14 +24,14 @@
     "swagger-ui-react": "^5.29.0",
     "vercel-url": "^0.2.8",
     "viem": "^2.37.6",
-    "x402": "^0.6.0",
-    "x402-next": "^0.6.0",
+    "x402": "^0.6.1",
+    "x402-next": "^0.6.1",
     "zerion-sdk": "^0.1.7",
-    "zod": "^4.1.8"
+    "zod": "^4.1.9"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
-    "@types/node": "^24.5.0",
+    "@types/node": "^24.5.2",
     "@types/react": "^19.1.13",
     "@types/swagger-ui-react": "^5.18.0",
     "concurrently": "^9.2.1",
