@@ -1,15 +1,15 @@
 // Class for fetching token prices from various sources.
-
-import { getAlchemyKey, getZerionKey } from "../app/config";
-import { ZerionFeed } from "./feeds";
-import { AlchemyFeed } from "./feeds/alchemy";
-import { CoingeckoFeed } from "./feeds/coingecko";
-import { DefilamaFeed } from "./feeds/defilama";
-import { DexScreenerFeed } from "./feeds/dex-screener";
-import { PriceFeed } from "./feeds/interface";
-import { IconFeed } from "./icons/interface";
-import { ZerionIconFeed } from "./icons/zerion";
-import { TokenQuery } from "./types";
+import {
+  AlchemyFeed,
+  CoingeckoFeed,
+  DefilamaFeed,
+  DexScreenerFeed,
+  ZerionFeed,
+  PriceFeed,
+} from ".";
+import { IconFeed, ZerionIconFeed } from "@/lib/icons";
+import { getAlchemyKey, getZerionKey } from "@/src/app/config";
+import { TokenQuery } from "@/lib/schema";
 
 export class QuorumFeed implements PriceFeed {
   private sources: PriceFeed[];

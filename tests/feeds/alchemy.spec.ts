@@ -1,6 +1,6 @@
 // Unit tests for alchemy.ts
 
-import { AlchemyFeed, isPriceDataResponse } from "@/src/lib/feeds/alchemy";
+import { AlchemyFeed, isPriceDataResponse } from "@/lib/prices/alchemy";
 import { getAlchemyKey } from "@/src/app/config";
 
 const USDC_BASE = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";

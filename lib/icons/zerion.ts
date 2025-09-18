@@ -1,5 +1,5 @@
 import { ZerionAPI } from "zerion-sdk";
-import { TokenQuery } from "../types";
+import { TokenQuery } from "../schema";
 import { IconFeed } from "./interface";
 
 export class ZerionIconFeed implements IconFeed {

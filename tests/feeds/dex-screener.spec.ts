@@ -1,11 +1,11 @@
 // Unit tests for coingecko.ts
 
-import { NATIVE_ASSET } from "@/src/lib/catch-eth";
+import { NATIVE_ASSET } from "@/lib/catch-eth";
 import {
   DexPair,
   DexScreenerFeed,
   evaluatePrice,
-} from "@/src/lib/feeds/dex-screener";
+} from "@/lib/prices/dex-screener";
 import { TORN_MAINNET } from "../fixtures";
 
 // Rate limits.

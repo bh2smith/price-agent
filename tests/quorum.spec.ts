@@ -1,5 +1,5 @@
 // Unit tests for coingecko.ts
-import { QuorumFeed } from "@/src/lib/quorum";
+import { QuorumFeed } from "@/lib/prices/quorum";
 import { TORN_MAINNET, XCOMB_GNOSIS, WETH_BASE } from "./fixtures";
 
 // Rate limits.

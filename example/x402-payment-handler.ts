@@ -75,7 +75,7 @@ const chainMap: Record<Network, Chain> = {
   ["base-sepolia"]: baseSepolia,
   ["avalanche"]: avalanche,
   ["avalanche-fuji"]: avalancheFuji,
-  ["iotex"]: iotex
+  ["iotex"]: iotex,
 };
 
 export function encodeTransferWithAuthorizationFor(

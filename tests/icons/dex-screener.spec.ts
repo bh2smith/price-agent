@@ -1,6 +1,6 @@
-import { DexScreenerIcons } from "@/src/lib/icons/dex-screener";
+import { DexScreenerIcons } from "@/lib/icons";
 import { TRUMP_BASE } from "../fixtures";
-import { TokenQuery } from "@/src/lib/types";
+import { TokenQuery } from "@/lib/schema";
 // Fetching icon for 8453:0xb96450dcb16e4a30b999cb5f4087bae9c0ffac4e
 
 const ELVIS_BASE: TokenQuery = {

@@ -1,7 +1,7 @@
 // Class for fetching token prices from various sources.
-import { getAlchemyKey, getZerionKey } from "../app/config";
-import { IconFeed, S3Archive } from "./icons";
-import { TokenQuery } from "./types";
+import { getAlchemyKey, getZerionKey } from "../../src/app/config";
+import { IconFeed, S3Archive } from "../icons";
+import { TokenQuery } from "../schema";
 import {
   AlchemyFeed,
   CoingeckoFeed,
@@ -9,7 +9,7 @@ import {
   DexScreenerFeed,
   ZerionFeed,
   PriceFeed,
-} from "./feeds";
+} from ".";
 
 export class FeedRevolver implements PriceFeed {
   private sources: PriceFeed[];

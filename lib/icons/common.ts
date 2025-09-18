@@ -1,4 +1,4 @@
-import { TokenQuery } from "../types";
+import { TokenQuery } from "../schema";
 
 const bucketUrl = "https://storage.googleapis.com/bitte-public";
 const tokensUrl = `${bucketUrl}/intents/tokens`;

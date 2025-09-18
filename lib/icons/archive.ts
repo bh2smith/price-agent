@@ -5,11 +5,13 @@ import {
   HeadObjectCommand,
 } from "@aws-sdk/client-s3";
 import { getEnvVar, getZerionKey } from "@/src/app/config";
-import { TokenQuery } from "../types";
-import { IconFeed } from "./interface";
-import { DexScreenerIcons } from "./dex-screener";
-import { ZerionIconFeed } from "./zerion";
-import { SmolDappIcons } from "./smoldapp";
+import {
+  DexScreenerIcons,
+  ZerionIconFeed,
+  SmolDappIcons,
+  type IconFeed,
+} from ".";
+import { TokenQuery } from "../schema";
 
 class S3Archive implements IconFeed {
   private s3: S3Client;
