@@ -6,6 +6,7 @@ export async function toolRouter<S extends z.ZodTypeAny, T>(
   request: NextRequest,
   schema: S,
   handler: (input: z.infer<S>) => Promise<T> | T,
+  routeName: string,
 ): Promise<NextResponse> {
   const url = new URL(request.url);
   const validationResult = validateQuery(url.searchParams, schema);
@@ -15,7 +16,7 @@ export async function toolRouter<S extends z.ZodTypeAny, T>(
       { status: 400 },
     );
   }
-  console.log("prices/", validationResult.query);
+  console.log(`${routeName}`, validationResult.query);
   try {
     const res = await handler(validationResult.query);
     return NextResponse.json(res, { status: 200 });

@@ -8,5 +8,5 @@ const logic = (x: TokenQuery) => ({
 });
 
 export async function GET(request: NextRequest) {
-  return toolRouter(request, TokenQuerySchema, logic);
+  return toolRouter(request, TokenQuerySchema, logic, "token");
 }
