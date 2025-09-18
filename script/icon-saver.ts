@@ -1,12 +1,12 @@
 import path from "path";
 import csv from "csv-parser";
 import { getZerionKey } from "@/src/app/config";
-import { ZerionIconFeed } from "@/src/lib/icons/zerion";
+import { ZerionIconFeed } from "@/lib/icons/zerion";
 import fs from "node:fs";
 import { getAddress } from "viem";
-import { S3Archive } from "@/src/lib/icons";
-import { DexScreenerIcons } from "@/src/lib/icons/dex-screener";
-import { SmolDappIcons } from "@/src/lib/icons/smoldapp";
+import { S3Archive } from "@/lib/icons";
+import { DexScreenerIcons } from "@/lib/icons/dex-screener";
+import { SmolDappIcons } from "@/lib/icons/smoldapp";
 
 const INPUT_CSV = "input.csv";
 const OUTPUT_DIR = "downloaded-icons";

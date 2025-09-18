@@ -1,6 +1,6 @@
 import { getAddress } from "viem";
 import { TORN_MAINNET, TRUMP_BASE } from "../fixtures";
-import { SmolDappIcons } from "@/src/lib/icons/smoldapp";
+import { SmolDappIcons } from "@/lib/icons/smoldapp";
 // Fetching icon for 42161:0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 describe("Smol Icons", () => {
   it("should retrieve and archive token icons", async () => {

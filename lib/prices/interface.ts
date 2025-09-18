@@ -1,4 +1,4 @@
-import { TokenQuery } from "../types";
+import { TokenQuery } from "../schema";
 
 export interface PriceResponse {
   price: number;

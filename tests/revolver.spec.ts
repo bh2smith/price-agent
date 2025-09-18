@@ -1,5 +1,5 @@
 // Unit tests for coingecko.ts
-import { FeedRevolver } from "@/src/lib/revolver";
+import { FeedRevolver } from "@/lib/prices/revolver";
 import { TORN_MAINNET, XCOMB_GNOSIS, TRUMP_BASE } from "./fixtures";
 
 // Rate limits.

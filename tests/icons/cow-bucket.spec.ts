@@ -1,6 +1,5 @@
-import { TokenQuery } from "@/src/lib/types";
-import { tokenId } from "@/src/lib/icons/common";
-import { CowBucketIcons } from "@/src/lib/icons";
+import { TokenQuery } from "@/lib/schema";
+import { CowBucketIcons, tokenId } from "@/lib/icons";
 
 const sampleList = [
   { chainId: 1, address: "0x0bee91533be2ede0936ea53457ce7bd9b0b398c6" },

@@ -1,9 +1,7 @@
 // Unit tests for coingecko.ts
 
-import { NATIVE_ASSET } from "@/src/lib/catch-eth";
-import { getTokenPrice } from "@/src/lib/feeds/coingecko";
-import { TokenQuery } from "@/src/lib/types";
-import { SAMPLE_TOKENS } from "../fixtures";
+import { NATIVE_ASSET } from "@/lib/catch-eth";
+import { getTokenPrice } from "@/lib/prices/coingecko";
 
 const USDC_BASE = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";
 const USDC_GNOSIS = "0xddafbb505ad214d7b80b1f830fccc89b60fb7a83";

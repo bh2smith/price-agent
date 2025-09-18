@@ -2,8 +2,8 @@ import Coingecko from "@coingecko/coingecko-typescript";
 import { IconFeed } from "./interface";
 import { isNativeAsset } from "../catch-eth";
 import { NATIVE_ASSET_ICONS, supportedChainIds, tokenId } from "./common";
-import { TokenQuery } from "../types";
 import { getAddress } from "viem";
+import { TokenQuery } from "../schema";
 
 export class CoinGeckoIconFeed implements IconFeed {
   name = "CoinGecko";

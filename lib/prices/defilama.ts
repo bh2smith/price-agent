@@ -1,7 +1,7 @@
 // Query DefiLama API for token prices.
 
 import { catchNativeAsset } from "../catch-eth";
-import { TokenQuery } from "../types";
+import { TokenQuery } from "../schema";
 import { PriceFeed, PriceResponse } from "./interface";
 
 const DEFILAMA_BASE_URL = "https://coins.llama.fi";

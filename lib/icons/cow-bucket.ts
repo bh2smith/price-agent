@@ -1,5 +1,5 @@
 import { isNativeAsset } from "../catch-eth";
-import { TokenQuery } from "../types";
+import { TokenQuery } from "../schema";
 import { NATIVE_ASSET_ICONS } from "./common";
 import { IconFeed } from "./interface";
 

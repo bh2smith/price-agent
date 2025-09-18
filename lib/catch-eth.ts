@@ -1,6 +1,6 @@
 import { Network } from "near-ca";
-import { TokenQuery } from "./types";
 import { Address, getAddress } from "viem";
+import { TokenQuery } from "./schema";
 
 export const NATIVE_ASSET = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
 

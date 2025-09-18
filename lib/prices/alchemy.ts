@@ -1,5 +1,5 @@
 import { catchNativeAsset } from "../catch-eth";
-import { TokenQuery } from "../types";
+import { TokenQuery } from "../schema";
 import { PriceFeed, PriceResponse } from "./interface";
 
 // Network mapping for Alchemy API

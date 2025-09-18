@@ -1,6 +1,6 @@
 import { ZerionAPI } from "zerion-sdk";
 import { catchNativeAsset } from "../catch-eth";
-import { TokenQuery } from "../types";
+import { TokenQuery } from "../schema";
 import { PriceFeed, PriceResponse } from "./interface";
 
 export class ZerionFeed implements PriceFeed {

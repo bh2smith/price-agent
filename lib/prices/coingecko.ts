@@ -1,6 +1,6 @@
 // Fetches token price from Coingecko
 import { catchNativeAsset } from "../catch-eth";
-import { TokenQuery } from "../types";
+import { TokenQuery } from "../schema";
 import { PriceFeed, PriceResponse } from "./interface";
 
 const CG_BASE_URL = "https://api.coingecko.com/api/v3/simple/token_price";

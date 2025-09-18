@@ -2,7 +2,7 @@
 
 import { Address } from "viem";
 import { catchNativeAsset } from "../catch-eth";
-import { TokenQuery } from "../types";
+import { TokenQuery } from "../schema";
 import { PriceFeed, PriceResponse } from "./interface";
 
 const DEXSCREENER_BASE_URL = "https://api.dexscreener.com/latest/dex/tokens";
