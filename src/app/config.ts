@@ -40,7 +40,6 @@ const SUPPORTED_NETWORKS = [
   8453, // base
   42161, // arbitrum
   43114, // avalanche
-  11155111, // sepolia
 ];
 
 export { ACCOUNT_ID, PLUGIN_URL, SUPPORTED_NETWORKS };
