@@ -10,7 +10,7 @@ const network = (process.env.NETWORK || "base") as Network;
 // Configure facilitator
 const facilitatorConfig = useCdpFacilitator ? facilitator : undefined;
 
-export const middleware = paymentMiddleware(
+export const proxy = paymentMiddleware(
   payTo,
   {
     "/api/tools/prices": {
@@ -30,6 +30,5 @@ export const middleware = paymentMiddleware(
 
 // Configure which paths the middleware should run on
 export const config = {
-  matcher: ["/api/tools/:path*"],
-  runtime: "nodejs", // TEMPORARY: Only needed until Edge runtime support is added
+  matcher: ["/api/tools/:path*"]
 };
