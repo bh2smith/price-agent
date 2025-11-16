@@ -9,7 +9,6 @@
     "deploy": "next build && make-agent deploy -u https://price-agent.vercel.app/",
     "validate": "make-agent validate -u https://price-agent.vercel.app/",
     "start": "next start",
-    "lint": "next lint",
     "fmt": "prettier --write ."
   },
   "dependencies": {
@@ -37,7 +36,7 @@
     "concurrently": "^9.2.1",
     "csv-parser": "^3.2.0",
     "eslint": "^9.39.1",
-    "eslint-config-next": "^15.5.6",
+    "eslint-config-next": "^16.0.3",
     "make-agent": "^0.4.1",
     "prettier": "^3.6.2",
     "typescript": "^5.9.3"
